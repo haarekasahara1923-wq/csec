@@ -16,7 +16,6 @@ export async function updateSettings(formData: FormData) {
             metaPixelId: formData.get("metaPixelId") as string,
         };
 
-        // Since we only have one settings row (id: 'default')
         await prisma.settings.upsert({
             where: { id: "default" },
             update: data,
@@ -27,10 +26,10 @@ export async function updateSettings(formData: FormData) {
         });
 
         revalidatePath("/admin/settings");
-        revalidatePath("/"); // Update public site links
-        return { success: true };
+        revalidatePath("/");
     } catch (error) {
         console.error("Update settings error:", error);
-        return { success: false, error: "Failed to update settings" };
+        // In server actions used directly in form 'action', throwing or non-returning is preferred if type issues occur
+        // or just return void.
     }
 }
