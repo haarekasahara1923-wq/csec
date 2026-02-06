@@ -4,6 +4,19 @@ import { formatDate } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Search, Download, Trash2, CheckCircle, Clock, MoreVertical } from "lucide-react";
 import { updateLeadStatus, deleteLead } from "@/app/actions/leads";
+import { LeadActions } from "./LeadActions";
+
+interface Lead {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+    course: string | null;
+    university: string | null;
+    status: string;
+    createdAt: Date;
+}
+
 
 export default async function LeadsPage() {
     const leads = await prisma.lead.findMany({
@@ -58,7 +71,7 @@ export default async function LeadsPage() {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-50">
-                                {leads.map((lead) => (
+                                {leads.map((lead: Lead) => (
                                     <tr key={lead.id} className="hover:bg-slate-50/50 transition-colors">
                                         <td className="px-6 py-5">
                                             <p className="font-bold text-slate-800">{lead.name}</p>
@@ -81,20 +94,13 @@ export default async function LeadsPage() {
                                         </td>
                                         <td className="px-6 py-5">
                                             <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${lead.status === 'NEW' ? 'bg-amber-100 text-amber-600' :
-                                                    lead.status === 'CONTACTED' ? 'bg-blue-100 text-blue-600' : 'bg-green-100 text-green-600'
+                                                lead.status === 'CONTACTED' ? 'bg-blue-100 text-blue-600' : 'bg-green-100 text-green-600'
                                                 }`}>
                                                 {lead.status}
                                             </span>
                                         </td>
                                         <td className="px-6 py-5">
-                                            <div className="flex items-center space-x-2">
-                                                <button className="p-2 text-slate-400 hover:text-primary hover:bg-white rounded-lg transition-all">
-                                                    <CheckCircle className="w-4 h-4" />
-                                                </button>
-                                                <button className="p-2 text-slate-400 hover:text-red-500 hover:bg-white rounded-lg transition-all">
-                                                    <Trash2 className="w-4 h-4" />
-                                                </button>
-                                            </div>
+                                            <LeadActions id={lead.id} status={lead.status} />
                                         </td>
                                     </tr>
                                 ))}

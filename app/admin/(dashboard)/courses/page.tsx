@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { BookOpen, Plus, Pencil, Trash2, Globe } from "lucide-react";
+import { CourseActions } from "./CourseActions";
 import Link from "next/link";
 
 export default async function AdminCoursesPage() {
@@ -31,10 +32,7 @@ export default async function AdminCoursesPage() {
                                 <div className="p-3 bg-blue-50 text-blue-500 rounded-xl">
                                     <BookOpen className="w-6 h-6" />
                                 </div>
-                                <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button className="p-2 text-slate-400 hover:text-primary hover:bg-slate-50 rounded-lg"><Pencil className="w-4 h-4" /></button>
-                                    <button className="p-2 text-slate-400 hover:text-red-500 hover:bg-slate-50 rounded-lg"><Trash2 className="w-4 h-4" /></button>
-                                </div>
+                                <CourseActions id={course.id} />
                             </div>
                             <h3 className="text-xl font-bold text-slate-800 mb-2">{course.title}</h3>
                             <p className="text-slate-500 text-sm line-clamp-3 mb-6">

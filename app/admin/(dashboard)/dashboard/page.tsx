@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Users, GraduationCap, School, CheckCircle2, TrendingUp, Clock } from "lucide-react";
 import { formatDate } from "@/lib/utils";
+import Link from "next/link";
 
 export default async function DashboardPage() {
     const leadsCount = await prisma.lead.count();
@@ -96,8 +97,12 @@ export default async function DashboardPage() {
                             <h4 className="text-xl font-bold mb-4">Quick Post</h4>
                             <p className="text-sm text-white/60 mb-6">Instantly add a new course or university to the portal.</p>
                             <div className="space-y-3">
-                                <button className="w-full py-3 bg-white text-primary rounded-xl font-bold hover:bg-secondary hover:text-white transition-all">Add Course</button>
-                                <button className="w-full py-3 border border-white/20 rounded-xl font-bold hover:bg-white/5 transition-all">Add University</button>
+                                <Link href="/admin/courses/new" className="block w-full">
+                                    <button className="w-full py-3 bg-white text-primary rounded-xl font-bold hover:bg-secondary hover:text-white transition-all">Add Course</button>
+                                </Link>
+                                <Link href="/admin/universities/new" className="block w-full">
+                                    <button className="w-full py-3 border border-white/20 rounded-xl font-bold hover:bg-white/5 transition-all">Add University</button>
+                                </Link>
                             </div>
                         </CardContent>
                     </Card>

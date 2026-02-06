@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { School, Plus, Pencil, Trash2, MapPin } from "lucide-react";
+import { UniversityActions } from "./UniversityActions";
 import Link from "next/link";
 
 export default async function AdminUniversitiesPage() {
@@ -37,10 +38,7 @@ export default async function AdminUniversitiesPage() {
                                     </p>
                                     <h3 className="text-lg font-bold text-slate-800">{uni.name}</h3>
                                 </div>
-                                <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button className="p-2 text-slate-400 hover:text-primary hover:bg-slate-50 rounded-lg"><Pencil className="w-4 h-4" /></button>
-                                    <button className="p-2 text-slate-400 hover:text-red-500 hover:bg-slate-50 rounded-lg"><Trash2 className="w-4 h-4" /></button>
-                                </div>
+                                <UniversityActions id={uni.id} />
                             </div>
                             <p className="text-slate-500 text-sm line-clamp-2 mb-4">
                                 {uni.description}
