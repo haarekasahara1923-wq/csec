@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { School, Plus, Pencil, Trash2, MapPin } from "lucide-react";
+import Link from "next/link";
 
 export default async function AdminUniversitiesPage() {
     const universities = await prisma.university.findMany({
@@ -15,13 +16,15 @@ export default async function AdminUniversitiesPage() {
                     <h2 className="text-2xl font-bold text-slate-800">Universities Portfolio</h2>
                     <p className="text-sm text-slate-500">Add or manage partner university details.</p>
                 </div>
-                <Button className="font-bold">
-                    <Plus className="w-4 h-4 mr-2" /> Add University
-                </Button>
+                <Link href="/admin/universities/new">
+                    <Button className="font-bold">
+                        <Plus className="w-4 h-4 mr-2" /> Add University
+                    </Button>
+                </Link>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {universities.map((uni) => (
+                {universities.map((uni: { id: string; name: string, description: string, location: string, slug: string }) => (
                     <Card key={uni.id} className="border-none shadow-sm group overflow-hidden">
                         <div className="h-24 bg-slate-100 flex items-center justify-center">
                             <School className="w-10 h-10 text-slate-300" />

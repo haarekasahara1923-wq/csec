@@ -16,13 +16,15 @@ export default async function AdminCoursesPage() {
                     <h2 className="text-2xl font-bold text-slate-800">Courses Management</h2>
                     <p className="text-sm text-slate-500">Manage the list of courses offered on the website.</p>
                 </div>
-                <Button className="font-bold">
-                    <Plus className="w-4 h-4 mr-2" /> Add New Course
-                </Button>
+                <Link href="/admin/courses/new">
+                    <Button className="font-bold">
+                        <Plus className="w-4 h-4 mr-2" /> Add New Course
+                    </Button>
+                </Link>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {courses.map((course) => (
+                {courses.map((course: { id: string; title: string, description: string, active: boolean, slug: string }) => (
                     <Card key={course.id} className="border-none shadow-sm group">
                         <CardContent className="p-6">
                             <div className="flex items-start justify-between mb-4">
