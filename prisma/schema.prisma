@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+}
+
+model Lead {
+  id          String   @id @default(uuid())
+  name        String
+  email       String
+  phone       String
+  city        String?
+  course      String?
+  university  String?
+  message     String?
+  sourcePage  String?
+  status      String   @default("NEW")
+  createdAt   DateTime @default(now())
+}
+
+model Course {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  description String
+  image       String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+model University {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  description String
+  location    String
+  logo        String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+model Page {
+  id        String   @id @default(uuid())
+  slug      String   @unique
+  title     String
+  content   Json
+  updatedAt DateTime @updatedAt
+}
+
+model Settings {
+  id        String   @id @default(uuid())
+  phone     String
+  email     String
+  address   String
+  facebook  String?
+  instagram String?
+  twitter   String?
+  linkedin  String?
+  metaPixelId String?
+}
