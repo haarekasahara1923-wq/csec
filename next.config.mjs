@@ -1,9 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    experimental: {
-        serverExternalPackages: ["@prisma/client", "ws"],
-    },
-    // Adding webpack fallback just in case experimental fails
+    // serverExternalPackages is a top-level property in Next.js 14.2+
+    serverExternalPackages: ["@prisma/client", "ws"],
+
     webpack: (config, { isServer }) => {
         if (isServer) {
             config.externals.push("ws");
