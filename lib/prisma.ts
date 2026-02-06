@@ -1,15 +1,15 @@
 import { PrismaClient } from '@prisma/client'
 import { PrismaNeon } from '@prisma/adapter-neon'
 import { Pool, neonConfig } from '@neondatabase/serverless'
+import ws from 'ws'
+
+// Fix for Vercel/Next.js environment
+// We set the WebSocket constructor explicitly
+if (typeof window === 'undefined') {
+  neonConfig.webSocketConstructor = ws
+}
 
 const prismaClientSingleton = () => {
-  if (typeof window === 'undefined') {
-    // Only import 'ws' in Node.js environment
-    // Use dynamic import or require to prevent bundling issues in Edge/Client
-    const ws = require('ws');
-    neonConfig.webSocketConstructor = ws;
-  }
-
   const connectionString = process.env.DATABASE_URL
   const neonPool = new Pool({ connectionString })
   const adapter = new PrismaNeon(neonPool)
