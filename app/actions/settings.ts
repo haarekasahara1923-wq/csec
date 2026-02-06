@@ -7,6 +7,7 @@ export async function updateSettings(formData: FormData) {
     try {
         const data = {
             phone: formData.get("phone") as string,
+            whatsapp: formData.get("whatsapp") as string,
             email: formData.get("email") as string,
             address: formData.get("address") as string,
             facebook: formData.get("facebook") as string,

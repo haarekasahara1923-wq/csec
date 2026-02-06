@@ -9,7 +9,7 @@ import { Menu, X, GraduationCap, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
-export const Navbar = () => {
+export const Navbar = ({ settings }: { settings: any }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const pathname = usePathname();

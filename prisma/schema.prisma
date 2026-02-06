@@ -62,6 +62,7 @@ model Page {
 model Settings {
   id        String   @id @default(uuid())
   phone     String
+  whatsapp  String?
   email     String
   address   String
   facebook  String?

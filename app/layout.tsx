@@ -53,17 +53,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+import prisma from "@/lib/prisma";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await prisma.settings.findFirst({ where: { id: "default" } });
+
   return (
     <html lang="en">
       <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
         <AuthProvider>
-          <MetaPixel pixelId={process.env.NEXT_PUBLIC_META_PIXEL_ID} />
-          <PublicLayoutWrapper>
+          <MetaPixel pixelId={settings?.metaPixelId || process.env.NEXT_PUBLIC_META_PIXEL_ID} />
+          <PublicLayoutWrapper settings={settings}>
             {children}
           </PublicLayoutWrapper>
         </AuthProvider>

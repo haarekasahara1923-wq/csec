@@ -30,6 +30,10 @@ export default async function AdminSettingsPage() {
                                     <Input name="phone" defaultValue={settings?.phone || ""} />
                                 </div>
                                 <div className="space-y-2">
+                                    <label className="text-xs font-bold uppercase text-slate-400">WhatsApp Number</label>
+                                    <Input name="whatsapp" defaultValue={settings?.whatsapp || ""} placeholder="e.g. 919876543210" />
+                                </div>
+                                <div className="space-y-2">
                                     <label className="text-xs font-bold uppercase text-slate-400">Email Address</label>
                                     <Input name="email" defaultValue={settings?.email || ""} />
                                 </div>
