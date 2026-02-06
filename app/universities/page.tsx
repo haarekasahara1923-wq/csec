@@ -37,7 +37,7 @@ export default async function UniversitiesPage() {
             <section className="py-32">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                        {universities.map((uni) => (
+                        {universities.map((uni: { id: string; name: string, description: string, location: string }) => (
                             <Card key={uni.id} className="group flex flex-col md:flex-row items-stretch border-none bg-white shadow-[0_32px_64px_-16px_rgba(0,0,0,0.05)] hover:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] rounded-[48px] overflow-hidden transition-all duration-700">
                                 <div className="md:w-[35%] bg-slate-50 min-h-[280px] relative overflow-hidden flex items-center justify-center p-12">
                                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>

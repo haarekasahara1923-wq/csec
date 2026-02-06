@@ -33,11 +33,11 @@ export default async function CoursesPage() {
             <section className="-mt-32 pb-32">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {courses.map((course) => (
+                        {courses.map((course: { id: string; title: string, description: string }) => (
                             <Card key={course.id} className="group border-none shadow-2xl shadow-slate-200/50 rounded-[40px] overflow-hidden bg-white transition-all duration-500 hover:-translate-y-2">
                                 <div className="h-64 bg-[#F1F5F9] relative overflow-hidden flex items-center justify-center">
                                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>
-                                    <GraduationCap className="w-24 h-24 text-slate-200 group-hover:scale-110 transition-transform duration-700" />
+                                    <GraduationCap className="w-24 h-24 text-slate-400/30 group-hover:scale-110 transition-transform duration-700" />
                                     <div className="absolute bottom-6 left-8 bg-white/95 backdrop-blur shadow-sm px-4 py-2 rounded-2xl flex items-center space-x-2">
                                         <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                                         <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-none pt-0.5">Application Open</span>
