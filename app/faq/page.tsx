@@ -1,9 +1,4 @@
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger
-} from "@/components/ui/Accordion";
+
 
 export const metadata = {
     title: "Frequently Asked Questions (FAQ)",
