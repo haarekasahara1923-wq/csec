@@ -31,12 +31,12 @@ export const Navbar = ({ settings }: { settings: any }) => {
         >
             <div className="container mx-auto px-6 md:px-12">
                 <div className="flex items-center justify-between">
-                    <Link href="/" className="flex items-center space-x-3 group">
-                        <div className="relative h-12 md:h-16 w-auto flex items-center justify-center overflow-hidden transition-all duration-500 hover:scale-105">
+                    <Link href="/" className="flex items-center shrink-0 group">
+                        <div className="relative h-12 md:h-16 w-40 md:w-56 flex items-center justify-start transition-all duration-500 hover:scale-105">
                             <img 
                                 src="/logo.jpg" 
                                 alt="CSEC Gwalior Logo" 
-                                className="h-full w-auto object-contain"
+                                className="h-full w-auto object-contain object-left"
                                 loading="eager"
                             />
                         </div>
@@ -95,7 +95,7 @@ export const Navbar = ({ settings }: { settings: any }) => {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: "100%" }}
                         transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                        className="fixed inset-0 z-40 lg:hidden bg-primary/95 backdrop-blur-2xl flex flex-col p-12 touch-none overflow-y-auto"
+                        className="fixed inset-0 z-40 lg:hidden bg-primary/95 backdrop-blur-2xl flex flex-col p-8 md:p-12 overflow-y-auto overscroll-contain"
                     >
                         <div className="flex justify-between items-center mb-16">
                              <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-3">
@@ -126,7 +126,7 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                     <Link
                                         href={item.href}
                                         className={cn(
-                                            "text-4xl font-black tracking-tighter transition-all block py-4",
+                                            "text-3xl font-black tracking-tight transition-all block py-3",
                                             pathname === item.href ? "text-secondary italic" : "text-white/60 hover:text-white"
                                         )}
                                         onClick={() => setIsOpen(false)}
