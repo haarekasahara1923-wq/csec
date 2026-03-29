@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { CheckCircle2, ArrowRight, UserPlus, FileText, ClipboardCheck, GraduationCap } from "lucide-react";

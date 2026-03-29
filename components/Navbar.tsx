@@ -32,16 +32,12 @@ export const Navbar = ({ settings }: { settings: any }) => {
             <div className="container mx-auto px-6 md:px-12">
                 <div className="flex items-center justify-between">
                     <Link href="/" className="flex items-center space-x-3 group">
-                        <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform duration-500 border border-white/10">
-                            <GraduationCap className="w-7 h-7 text-secondary" />
-                        </div>
-                        <div className="flex flex-col">
-                            <span className={cn("text-3xl font-black tracking-tighter leading-none transition-colors", scrolled ? "text-primary" : "text-primary")}>
-                                CSEC
-                            </span>
-                            <span className="text-[10px] uppercase tracking-[0.3em] font-black text-secondary">
-                                Gwalior
-                            </span>
+                        <div className="relative h-12 md:h-16 w-auto flex items-center justify-center overflow-hidden transition-all duration-500 hover:scale-105">
+                            <img 
+                                src="/logo.png" 
+                                alt="CSEC Gwalior Logo" 
+                                className="h-full w-auto object-contain"
+                            />
                         </div>
                     </Link>
 
@@ -102,10 +98,13 @@ export const Navbar = ({ settings }: { settings: any }) => {
                     >
                         <div className="flex justify-between items-center mb-16">
                              <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-3">
-                                <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center">
-                                    <GraduationCap className="w-6 h-6 text-primary" />
+                                <div className="h-10 w-auto flex items-center justify-center overflow-hidden">
+                                    <img 
+                                        src="/logo.png" 
+                                        alt="CSEC Gwalior Logo" 
+                                        className="h-full w-auto object-contain"
+                                    />
                                 </div>
-                                <span className="text-2xl font-black text-white tracking-tighter">CSEC</span>
                             </Link>
                             <button 
                                 className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white border border-white/10" 

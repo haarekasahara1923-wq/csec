@@ -1,3 +1,5 @@
+"use client";
+
 import { GraduationCap, BookOpen, Globe, Users, Briefcase, School, ArrowRight, CheckCircle2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
