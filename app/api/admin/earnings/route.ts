@@ -5,11 +5,12 @@ import prisma from "@/lib/prisma";
 export async function GET(req: Request) {
     try {
         const session = await auth();
-        if (!session || (session.user as any).role !== "ADMIN") {
+        const user = session?.user as any;
+        if (!session || !user || user.role !== "ADMIN") {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
 
-        const earnings = await prisma.earning.findMany({
+        const earnings = await (prisma as any).earning.findMany({
             orderBy: { createdAt: "desc" },
             include: {
                 partner: {
@@ -18,17 +19,22 @@ export async function GET(req: Request) {
             }
         });
 
-        // Fetch student names for display
-        const studentIds = earnings.map(e => e.studentId).filter(Boolean) as string[];
-        const students = await prisma.student.findMany({
+        const studentIds = earnings
+            .map((e: any) => e.studentId)
+            .filter(Boolean) as string[];
+
+        const students = await (prisma as any).student.findMany({
             where: { id: { in: studentIds } },
             select: { id: true, studentName: true }
         });
-        const studentsMap = Object.fromEntries(students.map(s => [s.id, s.studentName]));
 
-        const results = earnings.map(e => ({
+        const studentsMap = Object.fromEntries(
+            students.map((s: any) => [s.id, s.studentName])
+        );
+
+        const results = earnings.map((e: any) => ({
             ...e,
-            studentName: studentsMap[e.studentId as string] || "Direct Reward"
+            studentName: studentsMap[e.studentId] || "Direct Reward"
         }));
 
         return NextResponse.json(results);

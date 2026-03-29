@@ -6,23 +6,22 @@ import { sendMail, emailTemplates } from "@/lib/email";
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
     try {
         const session = await auth();
-        if (!session || (session.user as any).role !== "ADMIN") {
+        const user = session?.user as any;
+        if (!session || !user || user.role !== "ADMIN") {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
 
         const body = await req.json();
         const { status, commissionAmount, note } = body;
 
-        // 1. Update Student status
-        const student = await prisma.student.update({
+        const student = await (prisma as any).student.update({
             where: { id: params.id },
             data: { status },
             include: { partner: true }
         });
 
-        // 2. If Admitted and commission is set, create an earning
-        if (status === 'admitted' && commissionAmount > 0) {
-            await prisma.earning.create({
+        if (status === 'admitted' && commissionAmount && Number(commissionAmount) > 0) {
+            await (prisma as any).earning.create({
                 data: {
                     partnerId: student.partnerId,
                     studentId: student.id,
@@ -33,8 +32,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
                 }
             });
 
-            // Update Partner stats
-            await prisma.partner.update({
+            await (prisma as any).partner.update({
                 where: { id: student.partnerId },
                 data: {
                     totalEarnings: { increment: Number(commissionAmount) },
@@ -42,18 +40,16 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
                 }
             });
 
-            // Notify Partner about reward
             sendMail({
                 to: student.partner.email,
                 ...emailTemplates.earningAdded(Number(commissionAmount), 'Admission Reward')
-            }).catch(e => console.error("Reward email error:", e));
+            }).catch((e: any) => console.error("Reward email error:", e));
         }
 
-        // 3. Notify status update to partner
         sendMail({
             to: student.partner.email,
             ...emailTemplates.statusChanged(student.studentName, status)
-        }).catch(e => console.error("Status update email error:", e));
+        }).catch((e: any) => console.error("Status update email error:", e));
 
         return NextResponse.json({ message: "Student and partner rewards updated successfully" });
 

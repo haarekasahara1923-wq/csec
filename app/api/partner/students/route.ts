@@ -7,13 +7,14 @@ import { sendMail, emailTemplates } from "@/lib/email";
 export async function POST(req: Request) {
     try {
         const session = await auth();
-        if (!session || (session.user as any).role !== "PARTNER") {
+        const user = session?.user as any;
+        if (!session || !user || user.role !== "PARTNER") {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
 
         const body = await req.json();
         const { studentData, documents } = body;
-        const partnerId = session.user.id;
+        const partnerId = user.id as string;
 
         if (!studentData || !studentData.studentName || !studentData.mobile) {
             return NextResponse.json({ message: "Missing required student information" }, { status: 400 });
@@ -32,7 +33,6 @@ export async function POST(req: Request) {
                     });
                 } catch (err) {
                     console.error("Single document upload error:", err);
-                    // Continue with other uploads or handle as needed
                 }
             }
         }
@@ -40,7 +40,7 @@ export async function POST(req: Request) {
         // 2. Save to DB
         const student = await prisma.student.create({
             data: {
-                partnerId: partnerId as string,
+                partnerId,
                 studentName: studentData.studentName,
                 fatherName: studentData.fatherName,
                 motherName: studentData.motherName || "",
@@ -60,23 +60,21 @@ export async function POST(req: Request) {
         });
 
         // 3. Send Notifications
-        const partnerName = (session.user as any).name || "Partner";
-        
-        // Partner Email
-        sendMail({
-            to: session.user.email as string,
-            ...emailTemplates.studentSubmitted(studentData.studentName)
-        }).catch(err => console.error("Partner Email Error:", err));
+        const partnerName = user.name || "Partner";
 
-        // Admin Email
+        sendMail({
+            to: user.email as string,
+            ...emailTemplates.studentSubmitted(studentData.studentName)
+        }).catch((err: any) => console.error("Partner Email Error:", err));
+
         sendMail({
             to: process.env.ADMIN_EMAIL || 'csecgwl@gmail.com',
             ...emailTemplates.adminNewStudent(studentData.studentName, partnerName)
-        }).catch(err => console.error("Admin Email Error:", err));
+        }).catch((err: any) => console.error("Admin Email Error:", err));
 
-        return NextResponse.json({ 
-            message: "Student lead submitted successfully", 
-            studentId: student.id 
+        return NextResponse.json({
+            message: "Student lead submitted successfully",
+            studentId: student.id
         }, { status: 201 });
 
     } catch (error: any) {
@@ -88,13 +86,14 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
     try {
         const session = await auth();
-        if (!session || (session.user as any).role !== "PARTNER") {
+        const user = session?.user as any;
+        if (!session || !user || user.role !== "PARTNER") {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
 
-        const partnerId = session.user.id;
+        const partnerId = user.id as string;
         const students = await prisma.student.findMany({
-            where: { partnerId: partnerId as string },
+            where: { partnerId },
             orderBy: { createdAt: "desc" }
         });
 

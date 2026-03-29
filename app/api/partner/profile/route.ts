@@ -5,7 +5,8 @@ import prisma from "@/lib/prisma";
 export async function PUT(req: Request) {
     try {
         const session = await auth();
-        if (!session || (session.user as any).role !== "PARTNER") {
+        const user = session?.user as any;
+        if (!session || !user || user.role !== "PARTNER") {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
 
@@ -13,7 +14,7 @@ export async function PUT(req: Request) {
         const { fullName, mobile, whatsapp, city, country, organization } = body;
 
         const updatedPartner = await prisma.partner.update({
-            where: { id: session.user.id },
+            where: { id: user.id as string },
             data: {
                 fullName,
                 mobile,

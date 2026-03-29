@@ -5,14 +5,15 @@ import prisma from "@/lib/prisma";
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
     try {
         const session = await auth();
-        if (!session || (session.user as any).role !== "ADMIN") {
+        const user = session?.user as any;
+        if (!session || !user || user.role !== "ADMIN") {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
 
         const body = await req.json();
         const { status } = body;
 
-        const earning = await prisma.earning.findUnique({
+        const earning = await (prisma as any).earning.findUnique({
             where: { id: params.id }
         });
 
@@ -22,11 +23,11 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 
         if (status === 'paid' && earning.status !== 'paid') {
             await prisma.$transaction([
-                prisma.earning.update({
+                (prisma as any).earning.update({
                     where: { id: params.id },
                     data: { status: 'paid' }
                 }),
-                prisma.partner.update({
+                (prisma as any).partner.update({
                     where: { id: earning.partnerId },
                     data: {
                         pendingEarnings: { decrement: earning.amount },

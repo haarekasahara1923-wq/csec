@@ -5,12 +5,12 @@ import prisma from "@/lib/prisma";
 export async function GET(req: Request) {
     try {
         const session = await auth();
-        // Simplified admin role check
-        if (!session || (session.user as any).role !== "ADMIN") {
+        const user = session?.user as any;
+        if (!session || !user || user.role !== "ADMIN") {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
 
-        const partners = await prisma.partner.findMany({
+        const partners = await (prisma as any).partner.findMany({
             orderBy: { createdAt: "desc" },
             include: {
                 _count: {

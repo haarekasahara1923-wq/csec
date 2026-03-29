@@ -6,7 +6,8 @@ import bcrypt from "bcryptjs";
 export async function POST(req: Request) {
     try {
         const session = await auth();
-        if (!session || (session.user as any).role !== "PARTNER") {
+        const user = session?.user as any;
+        if (!session || !user || user.role !== "PARTNER") {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
 
@@ -14,12 +15,12 @@ export async function POST(req: Request) {
         const { currentPassword, newPassword } = body;
 
         const partner = await prisma.partner.findUnique({
-            where: { id: session.user.id },
+            where: { id: user.id as string },
             select: { passwordHash: true }
         });
 
         if (!partner || !partner.passwordHash) {
-            return NextResponse.json({ message: "Network error" }, { status: 404 });
+            return NextResponse.json({ message: "Partner not found" }, { status: 404 });
         }
 
         const isMatch = await bcrypt.compare(currentPassword, partner.passwordHash);
@@ -30,7 +31,7 @@ export async function POST(req: Request) {
         const newPasswordHash = await bcrypt.hash(newPassword, 12);
 
         await prisma.partner.update({
-            where: { id: session.user.id },
+            where: { id: user.id as string },
             data: { passwordHash: newPasswordHash }
         });
 

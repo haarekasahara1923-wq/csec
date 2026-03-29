@@ -5,12 +5,13 @@ import prisma from "@/lib/prisma";
 export async function GET(req: Request) {
     try {
         const session = await auth();
-        if (!session || (session.user as any).role !== "PARTNER") {
+        const user = session?.user as any;
+        if (!session || !user || user.role !== "PARTNER") {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
 
         const partner = await prisma.partner.findUnique({
-            where: { id: session.user.id },
+            where: { id: user.id as string },
             select: {
                 id: true,
                 fullName: true,

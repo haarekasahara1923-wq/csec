@@ -6,24 +6,28 @@ import { sendMail, emailTemplates } from "@/lib/email";
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
     try {
         const session = await auth();
-        if (!session || (session.user as any).role !== "ADMIN") {
+        const user = session?.user as any;
+        if (!session || !user || user.role !== "ADMIN") {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
 
         const body = await req.json();
         const { status } = body;
 
-        const partner = await prisma.partner.update({
+        const partner = await (prisma as any).partner.update({
             where: { id: params.id },
             data: { status }
         });
 
-        // Notify Partner
         if (status === 'active') {
-             sendMail({
+            sendMail({
                 to: partner.email,
-                ...emailTemplates.welcome(partner.fullName, partner.affiliateLink, `${process.env.NEXTAUTH_URL}/partner/login`)
-            }).catch(e => console.error("Email error:", e));
+                ...emailTemplates.welcome(
+                    partner.fullName,
+                    partner.affiliateLink,
+                    `${process.env.NEXTAUTH_URL}/partner/login`
+                )
+            }).catch((e: any) => console.error("Email error:", e));
         }
 
         return NextResponse.json({ message: "Status updated", partner });
