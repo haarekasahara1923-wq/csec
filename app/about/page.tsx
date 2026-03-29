@@ -62,26 +62,32 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* Leadership */}
-            <section className="py-24 bg-slate-50">
+            <section className="py-32 bg-slate-50 relative overflow-hidden">
                 <div className="container mx-auto px-4 text-center">
-                    <h2 className="text-4xl font-bold text-primary mb-16">Meet Our Leadership</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto gap-12">
-                        <div className="space-y-4">
-                            <div className="w-48 h-48 bg-gray-200 rounded-full mx-auto overflow-hidden">
-                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Director" alt="Director" />
+                    <div className="mb-20 space-y-4">
+                        <h2 className="text-[10px] font-black tracking-[0.3em] text-secondary uppercase bg-white inline-block px-4 py-2 rounded-full border border-slate-100">Executive Vision</h2>
+                        <h3 className="text-5xl md:text-7xl font-black text-primary tracking-tighter">Meet Our <span className="text-secondary italic">Leadership</span></h3>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto gap-20">
+                        <div className="space-y-6 group">
+                            <div className="w-56 h-56 bg-white rounded-full mx-auto overflow-hidden shadow-2xl border-8 border-white group-hover:scale-105 transition-transform duration-500">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Director" alt="Ritesh Tiwari" className="w-full h-full object-cover" />
                             </div>
-                            <h4 className="text-2xl font-bold text-primary">Mr. R.S. Kushwah</h4>
-                            <p className="text-secondary font-bold uppercase tracking-widest text-sm">Managing Director</p>
-                            <p className="text-gray-500">With 20+ years in the education sector, Mr. Kushwah has mentored thousands of students towards successful careers.</p>
+                            <div className="space-y-2">
+                                <h4 className="text-3xl font-black text-primary tracking-tight">Ritesh Tiwari</h4>
+                                <p className="text-secondary font-black uppercase tracking-widest text-[10px] bg-secondary/10 inline-block px-4 py-1 rounded-full">Managing Director</p>
+                            </div>
+                            <p className="text-slate-500 font-medium leading-relaxed max-w-sm mx-auto">Providing strategic direction and excellence in educational consulting with a student-first approach.</p>
                         </div>
-                        <div className="space-y-4">
-                            <div className="w-48 h-48 bg-gray-200 rounded-full mx-auto overflow-hidden">
-                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=CEO" alt="CEO" />
+                        <div className="space-y-6 group">
+                            <div className="w-56 h-56 bg-white rounded-full mx-auto overflow-hidden shadow-2xl border-8 border-white group-hover:scale-105 transition-transform duration-500">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=CEO" alt="Girraj Sharma" className="w-full h-full object-cover" />
                             </div>
-                            <h4 className="text-2xl font-bold text-primary">Mrs. S. Kushwah</h4>
-                            <p className="text-secondary font-bold uppercase tracking-widest text-sm">Head of Counseling</p>
-                            <p className="text-gray-500">A certified career coach specializing in identifying student strengths and aligning them with global opportunities.</p>
+                            <div className="space-y-2">
+                                <h4 className="text-3xl font-black text-primary tracking-tight">Girraj Sharma</h4>
+                                <p className="text-secondary font-black uppercase tracking-widest text-[10px] bg-secondary/10 inline-block px-4 py-1 rounded-full">Head of Counseling</p>
+                            </div>
+                            <p className="text-slate-500 font-medium leading-relaxed max-w-sm mx-auto">Expert in identifying student potential and aligning them with premier global academic opportunities.</p>
                         </div>
                     </div>
                 </div>
