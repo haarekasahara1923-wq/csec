@@ -18,7 +18,7 @@ export default function ServicesPage() {
             icon: School,
             title: "Direct Admission Guidance",
             desc: "We simplify the complex admission process for various UG/PG courses like MBBS, B.Tech, MBA, etc., in top government and private universities.",
-            image: "https://images.unsplash.com/photo-1541339907198-e08756ebafe1?q=80&w=800&auto=format&fit=crop",
+            image: "https://images.unsplash.com/photo-1523050335392-9ae86eb197ee?q=80&w=800&auto=format&fit=crop",
             details: ["Form Filling Support", "Document Verification", "Seat Allocation Guidance", "Quota Eligibility Check"]
         },
         {
