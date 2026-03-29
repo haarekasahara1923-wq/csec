@@ -22,8 +22,9 @@ export default async function PartnerDashboardLayout({
     children: React.ReactNode;
 }) {
     const session = await auth();
+    const user = session?.user as any;
 
-    if (!session || (session.user as any).role !== "PARTNER") {
+    if (!session || !user || user.role !== "PARTNER") {
         redirect("/partner/login");
     }
 
@@ -99,11 +100,11 @@ export default async function PartnerDashboardLayout({
                         
                         <div className="flex items-center space-x-3 border-l border-slate-100 pl-6">
                             <div className="text-right hidden sm:block">
-                                <p className="text-sm font-black text-slate-800 leading-none">{session.user.name}</p>
+                                <p className="text-sm font-black text-slate-800 leading-none">{user?.name}</p>
                                 <p className="text-[10px] font-bold text-slate-400 uppercase mt-0.5">Verified Partner</p>
                             </div>
                             <div className="w-10 h-10 bg-gradient-to-tr from-[#1a56db] to-blue-400 rounded-xl flex items-center justify-center text-white font-black text-sm">
-                                {session.user.name?.charAt(0)}
+                                {user?.name?.charAt(0)}
                             </div>
                         </div>
                     </div>
