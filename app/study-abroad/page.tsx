@@ -40,10 +40,10 @@ export default function StudyAbroadPage() {
                 <div className="container mx-auto px-4 max-w-7xl">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
                         {[
-                            { img: "https://images.unsplash.com/photo-1554118811-1e0d58224f2b?q=80&w=600&auto=format&fit=crop", title: "Visa Assistance", desc: "95% Visa success rate with meticulous documentation and interview prep." },
+                            { img: "https://plus.unsplash.com/premium_photo-1661270430635-48b894103681?q=80&w=600&auto=format&fit=crop", title: "Visa Assistance", desc: "95% Visa success rate with meticulous documentation and interview prep." },
                             { img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600&auto=format&fit=crop", title: "Course Matching", desc: "Personalized profiling to find programs that align with your long-term career goals." },
                             { img: "https://images.unsplash.com/photo-1550565118-3a14e8d0386f?q=80&w=600&auto=format&fit=crop", title: "Loan Guidance", desc: "Complete support for overseas education loans and financial planning assistance." },
-                            { img: "https://images.unsplash.com/photo-1600880210819-3506c98c1977?q=80&w=600&auto=format&fit=crop", title: "Safe & Secure", desc: "24/7 on-ground legal and moral support throughout your academic stay abroad." },
+                            { img: "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=600&auto=format&fit=crop", title: "Safe & Secure", desc: "24/7 on-ground legal and moral support throughout your academic stay abroad." },
                         ].map((feature, idx) => (
                             <Card key={idx} className="group overflow-hidden border-none bg-slate-50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 rounded-[40px]">
                                 <div className="h-60 overflow-hidden relative">
