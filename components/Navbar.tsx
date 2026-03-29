@@ -57,6 +57,11 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                 {item.title}
                             </Link>
                         ))}
+                        <Link href="/partner/register">
+                            <Button variant="outline" size="sm" className="border-[#1a56db] text-[#1a56db] hover:bg-[#1a56db] hover:text-white">
+                                Become a Partner
+                            </Button>
+                        </Link>
                         <Link href="/apply">
                             <Button size="sm" className="shadow-lg shadow-secondary/20">
                                 Apply Now
@@ -94,6 +99,9 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                     {item.title}
                                 </Link>
                             ))}
+                            <Link href="/partner/register" onClick={() => setIsOpen(false)}>
+                                <Button variant="outline" className="w-full border-[#1a56db] text-[#1a56db] hover:bg-[#1a56db] hover:text-white">Become a Partner</Button>
+                            </Link>
                             <Link href="/apply" onClick={() => setIsOpen(false)}>
                                 <Button className="w-full">Apply Now</Button>
                             </Link>

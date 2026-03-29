@@ -19,24 +19,46 @@ export const {
             async authorize(credentials) {
                 if (!credentials?.email || !credentials?.password) return null;
 
-                const user = await prisma.user.findUnique({
-                    where: { email: credentials.email as string },
-                });
+                const email = credentials.email as string;
+                const password = credentials.password as string;
+                const loginType = (credentials as any).loginType;
 
-                if (!user || !user.password) return null;
+                if (loginType === "partner") {
+                    const partner = await prisma.partner.findUnique({
+                        where: { email },
+                    });
 
-                const isPasswordCorrect = await bcrypt.compare(
-                    credentials.password as string,
-                    user.password
-                );
+                    if (partner && partner.passwordHash) {
+                        const isMatch = await bcrypt.compare(password, partner.passwordHash);
+                        if (isMatch) {
+                            return {
+                                id: partner.id,
+                                email: partner.email,
+                                name: partner.fullName,
+                                role: "PARTNER",
+                            };
+                        }
+                    }
+                } else {
+                    const user = await prisma.user.findUnique({
+                        where: { email },
+                    });
 
-                if (!isPasswordCorrect) return null;
-
-                return {
-                    id: user.id,
-                    email: user.email,
-                };
+                    if (user && user.password) {
+                        const isMatch = await bcrypt.compare(password, user.password);
+                        if (isMatch) {
+                            return {
+                                id: user.id,
+                                email: user.email,
+                                role: user.role || "ADMIN",
+                            };
+                        }
+                    }
+                }
+                
+                return null;
             },
         }),
     ],
 });
+

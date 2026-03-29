@@ -29,6 +29,7 @@ export const siteConfig = {
                 { title: "Home", href: "/" },
                 { title: "About Us", href: "/about" },
                 { title: "Apply Now", href: "/apply" },
+                { title: "Partner Program", href: "/partner/register" },
                 { title: "Contact Us", href: "/contact" },
             ],
         },

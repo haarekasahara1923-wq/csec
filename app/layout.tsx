@@ -55,6 +55,10 @@ export const metadata: Metadata = {
 
 import prisma from "@/lib/prisma";
 
+import { Toaster } from 'sonner';
+import { ReferralTracker } from '@/components/ReferralTracker';
+import { Suspense } from 'react';
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -67,11 +71,16 @@ export default async function RootLayout({
       <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
         <AuthProvider>
           <MetaPixel pixelId={settings?.metaPixelId || process.env.NEXT_PUBLIC_META_PIXEL_ID} />
+          <Suspense fallback={null}>
+            <ReferralTracker />
+          </Suspense>
           <PublicLayoutWrapper settings={settings}>
             {children}
           </PublicLayoutWrapper>
+          <Toaster position="top-right" richColors />
         </AuthProvider>
       </body>
     </html>
   );
 }
+

@@ -10,7 +10,9 @@ import {
     LogOut,
     LayoutDashboard,
     ExternalLink,
-    GraduationCap
+    GraduationCap,
+    Handshake,
+    Wallet
 } from "lucide-react";
 
 export default async function AdminDashboardLayout({
@@ -27,6 +29,9 @@ export default async function AdminDashboardLayout({
     const navItems = [
         { title: "Overview", href: "/admin/dashboard", icon: LayoutDashboard },
         { title: "Leads", href: "/admin/leads", icon: Users },
+        { title: "Partner Network", href: "/admin/partners", icon: Handshake },
+        { title: "Partner Students", href: "/admin/partner-students", icon: GraduationCap },
+        { title: "Partner Earnings", href: "/admin/earnings", icon: Wallet },
         { title: "Courses", href: "/admin/courses", icon: BookOpen },
         { title: "Universities", href: "/admin/universities", icon: School },
         { title: "Settings", href: "/admin/settings", icon: Settings },

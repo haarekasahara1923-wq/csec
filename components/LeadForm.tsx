@@ -44,7 +44,12 @@ export const LeadForm = ({
     const onSubmit = async (data: LeadFormData) => {
         setStatus("loading");
         try {
-            const result = await submitLead({ ...data, sourcePage });
+            // Get referral from cookies
+            const ref = typeof document !== 'undefined' 
+                ? document.cookie.split("; ").find((row) => row.startsWith("csec_ref="))?.split("=")[1] 
+                : undefined;
+
+            const result = await submitLead({ ...data, sourcePage, referralCode: ref });
             if (result.success) {
                 setStatus("success");
 

@@ -12,6 +12,7 @@ export async function submitLead(data: {
     university?: string;
     message?: string;
     sourcePage?: string;
+    referralCode?: string;
 }) {
     try {
         await prisma.lead.create({
@@ -24,6 +25,7 @@ export async function submitLead(data: {
                 university: data.university,
                 message: data.message,
                 sourcePage: data.sourcePage,
+                referralCode: data.referralCode,
             },
         });
 

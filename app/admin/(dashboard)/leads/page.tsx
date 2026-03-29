@@ -60,31 +60,36 @@ export default async function LeadsPage() {
                 <CardContent className="p-0">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left">
-                            <thead className="bg-slate-50/50">
-                                <tr className="text-xs uppercase tracking-wider text-slate-400 font-bold">
-                                    <th className="px-6 py-4">Student</th>
-                                    <th className="px-6 py-4">Contact Details</th>
-                                    <th className="px-6 py-4">Course & Uni</th>
-                                    <th className="px-6 py-4">Date</th>
-                                    <th className="px-6 py-4">Status</th>
-                                    <th className="px-6 py-4">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-slate-50">
-                                {leads.map((lead: Lead) => (
-                                    <tr key={lead.id} className="hover:bg-slate-50/50 transition-colors">
-                                        <td className="px-6 py-5">
-                                            <p className="font-bold text-slate-800">{lead.name}</p>
-                                            <p className="text-slate-400 text-[10px] uppercase font-bold tracking-tight">ID: {lead.id.substring(0, 8)}</p>
-                                        </td>
-                                        <td className="px-6 py-5">
-                                            <p className="text-sm font-medium text-slate-600 flex items-center mb-1">
-                                                <span className="w-4 text-primary shrink-0">✉</span> {lead.email}
-                                            </p>
-                                            <p className="text-sm font-medium text-slate-600 flex items-center">
-                                                <span className="w-4 text-primary shrink-0">☏</span> {lead.phone}
-                                            </p>
-                                        </td>
+                                    <thead className="bg-slate-50/50">
+                                        <tr className="text-xs uppercase tracking-wider text-slate-400 font-bold">
+                                            <th className="px-6 py-4">Student</th>
+                                            <th className="px-6 py-4">Contact & Referral</th>
+                                            <th className="px-6 py-4">Course & Uni</th>
+                                            <th className="px-6 py-4">Date</th>
+                                            <th className="px-6 py-4">Status</th>
+                                            <th className="px-6 py-4 text-right">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-50">
+                                        {leads.map((lead: any) => (
+                                            <tr key={lead.id} className="hover:bg-slate-50/50 transition-colors">
+                                                <td className="px-6 py-5">
+                                                    <p className="font-bold text-slate-800">{lead.name}</p>
+                                                    <p className="text-slate-400 text-[10px] uppercase font-bold tracking-tight">Source: {lead.sourcePage || "Direct"}</p>
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    <p className="text-sm font-medium text-slate-600 mb-1 flex items-center">
+                                                        <span className="w-5 text-primary opacity-50 font-bold italic">@</span> {lead.email}
+                                                    </p>
+                                                    <p className="text-sm font-medium text-slate-600 flex items-center">
+                                                        <span className="w-5 text-primary opacity-50 font-bold italic">#</span> {lead.phone}
+                                                    </p>
+                                                    {lead.referralCode && (
+                                                        <div className="mt-2 inline-flex items-center space-x-2 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
+                                                            <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest">REF: {lead.referralCode}</span>
+                                                        </div>
+                                                    )}
+                                                </td>
                                         <td className="px-6 py-5">
                                             <p className="text-sm font-bold text-slate-700">{lead.course || "NA"}</p>
                                             <p className="text-xs text-slate-400">{lead.university || "No preference"}</p>

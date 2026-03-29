@@ -26,6 +26,7 @@ model Lead {
   university  String?
   message     String?
   sourcePage  String?
+  referralCode String?
   status      String   @default("NEW")
   createdAt   DateTime @default(now())
 }
@@ -71,3 +72,60 @@ model Settings {
   linkedin  String?
   metaPixelId String?
 }
+
+model Partner {
+  id                String   @id @default(cuid())
+  fullName          String
+  email             String   @unique
+  mobile            String
+  whatsapp          String
+  passwordHash      String
+  affiliateCode     String   @unique  // e.g. "CSEC-AB12XY"
+  affiliateLink     String   @unique  // full URL: csecgwl.com/apply?ref=CSEC-AB12XY
+  status            String   @default("active")  // active | suspended
+  country           String?
+  city              String?
+  organization      String?
+  totalEarnings     Float    @default(0)
+  pendingEarnings   Float    @default(0)
+  paidEarnings      Float    @default(0)
+  createdAt         DateTime @default(now())
+  students          Student[]
+  earnings          Earning[]
+}
+
+model Student {
+  id                String   @id @default(cuid())
+  partnerId         String
+  partner           Partner  @relation(fields: [partnerId], references: [id])
+  studentName       String
+  fatherName        String
+  motherName        String
+  address           String
+  city              String
+  state             String
+  pincode           String
+  mobile            String
+  email             String
+  academicQual      String   // e.g. "12th Pass, 75%"
+  interestedCourse  String   // B.Tech / MBA / MBBS / BBA / Study Abroad etc.
+  preferredUniv     String?
+  query             String?
+  documents         Json     // Array of {fileName, fileUrl, fileType}
+  status            String   @default("new") // new | in_review | admitted | rejected
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Earning {
+  id                String   @id @default(cuid())
+  partnerId         String
+  partner           Partner  @relation(fields: [partnerId], references: [id])
+  studentId         String
+  amount            Float
+  type              String   // "commission" | "bonus"
+  status            String   @default("pending") // pending | paid
+  note              String?
+  createdAt         DateTime @default(now())
+}
+
