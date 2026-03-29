@@ -13,7 +13,8 @@ import {
     Loader2, 
     GraduationCap,
     Info,
-    CheckCircle2
+    CheckCircle2,
+    Plus
 } from "lucide-react";
 import { toast } from "sonner";
 

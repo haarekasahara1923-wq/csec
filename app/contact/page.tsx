@@ -9,7 +9,8 @@ export const metadata = {
 
 export default async function ContactPage() {
     const settings = await prisma.settings.findFirst({ where: { id: "default" } });
-    const whatsappNumber = settings?.whatsapp || settings?.phone;
+    const whatsappNumber = (settings as any)?.whatsapp || settings?.phone;
+
 
     return (
         <div className="min-h-screen bg-white">
