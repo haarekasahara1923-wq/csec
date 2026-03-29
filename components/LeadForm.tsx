@@ -6,7 +6,7 @@ import * as z from "zod";
 import { useState } from "react";
 import { Input, Textarea } from "./ui/Input";
 import { Button } from "./ui/Button";
-import { submitLead } from "@/app/actions/leads";
+import { submitLead } from "@/actions/leads";
 import { CheckCircle2, AlertCircle, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -49,7 +49,18 @@ export const LeadForm = ({
                 ? document.cookie.split("; ").find((row) => row.startsWith("csec_ref="))?.split("=")[1] 
                 : undefined;
 
-            const result = await submitLead({ ...data, sourcePage, referralCode: ref });
+            const result = await submitLead({
+                name: data.name,
+                email: data.email,
+                phone: data.phone,
+                city: data.city,
+                course: data.course,
+                university: data.university,
+                message: data.message,
+                sourcePage,
+                referralCode: ref,
+            });
+
             if (result.success) {
                 setStatus("success");
 
