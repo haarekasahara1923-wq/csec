@@ -75,8 +75,8 @@ export default async function Home() {
 
             <div className="relative group overflow-hidden rounded-3xl shadow-2xl">
               <img 
-                src="https://images.unsplash.com/photo-1523050335392-9ae86eb197ee?q=80&w=1600&auto=format&fit=crop" 
-                alt="College Admissions 2026" 
+                src="/hero-offer.jpg" 
+                alt="College Admissions 2026 Offer" 
                 className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-8">
@@ -100,10 +100,10 @@ export default async function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {[
-              { img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=800&auto=format&fit=crop", title: "Career Counseling", desc: "Expert assessment of your skills and passions to find your perfect professional path." },
-              { img: "https://images.unsplash.com/photo-1541339907198-e08756ebafe1?q=80&w=800&auto=format&fit=crop", title: "University Selection", desc: "Identifying top institutions that match your academic profile and long-term goals." },
-              { img: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=800&auto=format&fit=crop", title: "Admission Assistance", desc: "Complete support for applications, from SOP editing to secure enrollment documentation." },
-              { img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop", title: "Study Abroad", desc: "Global exposure through our partnerships with leading international universities." },
+              { img: "/service_career.png", title: "Career Counseling", desc: "Expert assessment of your skills and passions to find your perfect professional path." },
+              { img: "/service_uni.png", title: "University Selection", desc: "Identifying top institutions that match your academic profile and long-term goals." },
+              { img: "/service_admission.png", title: "Admission Assistance", desc: "Complete support for applications, from SOP editing to secure enrollment documentation." },
+              { img: "/service_abroad.png", title: "Study Abroad", desc: "Global exposure through our partnerships with leading international universities." },
               { img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800&auto=format&fit=crop", title: "Job Placement", desc: "End-to-end career support including internship placement and final job offers." },
               { img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop", title: "Scholarship Guidance", desc: "Maximizing your financial aid opportunities with merit and need-based scholarships." },
             ].map((service, idx) => (
