@@ -31,9 +31,9 @@ export const Navbar = ({ settings }: { settings: any }) => {
         >
             <div className="container mx-auto px-6 md:px-12">
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2 md:space-x-4">
+                    <div className="flex items-center space-x-2 md:space-x-3 lg:space-x-4">
                         <Link href="/" className="flex items-center shrink-0 group">
-                            <div className="relative h-12 md:h-16 w-32 md:w-48 flex items-center justify-start transition-all duration-500 hover:scale-105">
+                            <div className="relative h-10 md:h-16 w-24 md:w-36 flex items-center justify-start transition-all duration-500 hover:scale-105">
                                 <img 
                                     src="/logo.jpg" 
                                     alt="CSEC Gwalior Logo" 
@@ -42,22 +42,27 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                 />
                             </div>
                         </Link>
-                        <div className="flex flex-col justify-center border-l-2 border-secondary/30 pl-3 md:pl-4 h-10 md:h-12">
-                            <span className="text-[8px] md:text-sm font-black text-primary leading-tight tracking-tighter uppercase opacity-40">Welcome to</span>
-                            <span className="text-[10px] md:text-lg font-black bg-gradient-to-r from-primary via-slate-700 to-primary bg-clip-text text-transparent leading-none tracking-tight uppercase whitespace-nowrap">
-                                Career Solution <span className="text-secondary italic">Education Consultancy</span>
-                            </span>
+                        <div className="flex flex-col justify-center border-l-2 border-secondary/30 pl-2 md:pl-4 h-10 md:h-12 overflow-hidden">
+                            <span className="text-[10px] md:text-sm font-black text-primary leading-tight tracking-tighter uppercase opacity-40">Welcome to</span>
+                            <div className="flex flex-col md:flex-row md:items-baseline md:space-x-1">
+                                <span className="text-[10px] md:text-lg font-black bg-gradient-to-r from-primary via-slate-700 to-primary bg-clip-text text-transparent leading-none tracking-tight uppercase">
+                                    Career Solution
+                                </span>
+                                <span className="text-[8px] md:text-base font-bold text-secondary italic leading-none uppercase whitespace-nowrap">
+                                    Education Consultancy
+                                </span>
+                            </div>
                         </div>
                     </div>
 
                     {/* Desktop Nav */}
-                    <div className="hidden lg:flex items-center space-x-10">
+                    <div className="hidden lg:flex items-center space-x-4 xl:space-x-8 ml-auto">
                         {siteConfig.nav.map((item) => (
                             <Link
                                 key={item.href}
                                 href={item.href}
                                 className={cn(
-                                    "text-sm font-black uppercase tracking-widest transition-all hover:text-secondary group relative",
+                                    "text-[10px] xl:text-sm font-black uppercase tracking-tight xl:tracking-widest transition-all hover:text-secondary group relative whitespace-nowrap",
                                     pathname === item.href ? "text-secondary" : "text-primary"
                                 )}
                             >
