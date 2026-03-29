@@ -32,18 +32,18 @@ export const Navbar = ({ settings }: { settings: any }) => {
             <div className="container mx-auto px-6 md:px-12">
                 <div className="flex items-center w-full">
                     {/* Logo & Branding */}
-                    <div className="flex items-center space-x-1 shrink-0">
+                    <div className="flex items-center shrink-0">
                         <Link href="/" className="flex items-center group">
-                            <div className="relative h-10 md:h-16 w-24 md:w-36 flex items-center justify-start transition-all duration-500 hover:scale-105">
+                            <div className="relative h-10 md:h-16 w-auto flex items-center justify-center transition-all duration-500 hover:scale-105">
                                 <img 
                                     src="/logo.jpg" 
                                     alt="CSEC Gwalior Logo" 
-                                    className="h-full w-auto object-contain object-left"
+                                    className="h-full w-auto object-contain"
                                     loading="eager"
                                 />
                             </div>
                         </Link>
-                        <div className="flex flex-col justify-center border-l border-secondary/20 pl-1.5 md:pl-2 h-10 md:h-14">
+                        <div className="flex flex-col justify-center border-l-2 border-secondary/20 pl-2 md:pl-3 h-10 md:h-12 ml-1.5 md:ml-2">
                             <span className="text-[11px] md:text-xl font-black bg-gradient-to-r from-primary via-slate-700 to-primary bg-clip-text text-transparent leading-none uppercase tracking-tighter">
                                 Career Solution
                             </span>
