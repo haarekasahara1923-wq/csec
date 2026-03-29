@@ -36,13 +36,14 @@ export default async function Home() {
                 <Award className="w-4 h-4" />
                 <span>Trusted by 5000+ Students</span>
               </div>
-              <h1 className="text-5xl md:text-7xl font-bold text-primary leading-[1.1]">
-                Your Gateway to <br />
-                <span className="text-secondary">Premier Education</span>
+              <h1 className="text-5xl md:text-8xl font-black text-primary leading-[1.0] tracking-tighter">
+                Your College <br />
+                <span className="text-secondary italic">Seat Selection</span>
               </h1>
-              <p className="text-xl text-gray-600 max-w-xl leading-relaxed">
-                Expert guidance for university admissions, career counseling, and study abroad programs.
-                We turn your academic aspirations into reality.
+              <p className="text-xl text-slate-500 max-w-xl leading-relaxed font-medium">
+                UG Admissions open for 2026. Get expert counseling for 
+                <span className="text-primary font-bold"> Management, Engineering, and Design </span> 
+                at top private universities.
               </p>
               <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                 <Link href="/apply">
@@ -72,11 +73,17 @@ export default async function Home() {
               </div>
             </div>
 
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-secondary to-primary rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-              <div className="relative bg-white p-8 rounded-2xl shadow-2xl">
-                <h3 className="text-2xl font-bold text-primary mb-6 text-center">Fast-Track Your Admission</h3>
-                <LeadForm sourcePage="Home Hero" />
+            <div className="relative group overflow-hidden rounded-3xl shadow-2xl">
+              <img 
+                src="https://images.unsplash.com/photo-1523050335392-9ae86eb197ee?q=80&w=1600&auto=format&fit=crop" 
+                alt="College Admissions 2026" 
+                className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-8">
+                <div className="text-white">
+                  <h3 className="text-2xl font-black mb-2 leading-none uppercase tracking-tighter italic">Admissions Open 2026</h3>
+                  <p className="text-sm font-bold text-gray-200">Management | Engineering | Design | Law</p>
+                </div>
               </div>
             </div>
           </div>
@@ -84,31 +91,31 @@ export default async function Home() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white relative">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="text-sm font-bold tracking-widest text-secondary uppercase">Our Services</h2>
-            <h3 className="text-4xl md:text-5xl font-bold text-primary">Comprehensive Guidance</h3>
-            <p className="text-gray-500 max-w-2xl mx-auto">
-              We provide end-to-end support for your educational journey, from selecting the right course to securing your admission.
-            </p>
+          <div className="text-center mb-20 space-y-4">
+            <h2 className="text-[10px] font-black tracking-[0.3em] text-secondary uppercase bg-secondary/5 inline-block px-4 py-2 rounded-full border border-secondary/10">Expert Guidance</h2>
+            <h3 className="text-5xl md:text-7xl font-black text-primary tracking-tighter">Your Future, <span className="text-secondary italic">Our Commitment</span></h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {[
-              { icon: Users, title: "Career Counseling", desc: "Personalized advice to help you choose the career path that matches your passion and potential." },
-              { icon: School, title: "University Selection", desc: "Expert help in choosing the best colleges and universities based on your profile and goals." },
-              { icon: BookOpen, title: "Admission Assistance", desc: "Step-by-step guidance through the complex admission process and documentation." },
-              { icon: Globe, title: "Study Abroad", desc: "Complete support for international admissions, including visas and pre-departure briefings." },
-              { icon: Briefcase, title: "Job Placement", desc: "Connecting graduates with top employers and career opportunities in their field." },
-              { icon: GraduationCap, title: "Scholarship Guidance", desc: "Informing and helping students apply for various financial aids and merit-based scholarships." },
+              { img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=800&auto=format&fit=crop", title: "Career Counseling", desc: "Expert assessment of your skills and passions to find your perfect professional path." },
+              { img: "https://images.unsplash.com/photo-1541339907198-e08756ebafe1?q=80&w=800&auto=format&fit=crop", title: "University Selection", desc: "Identifying top institutions that match your academic profile and long-term goals." },
+              { img: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=800&auto=format&fit=crop", title: "Admission Assistance", desc: "Complete support for applications, from SOP editing to secure enrollment documentation." },
+              { img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop", title: "Study Abroad", desc: "Global exposure through our partnerships with leading international universities." },
+              { img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800&auto=format&fit=crop", title: "Job Placement", desc: "End-to-end career support including internship placement and final job offers." },
+              { img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop", title: "Scholarship Guidance", desc: "Maximizing your financial aid opportunities with merit and need-based scholarships." },
             ].map((service, idx) => (
-              <Card key={idx} className="hover:shadow-xl transition-shadow border-none bg-slate-50 p-8">
-                <div className="w-14 h-14 bg-white rounded-xl shadow-sm flex items-center justify-center mb-6">
-                  <service.icon className="w-8 h-8 text-secondary" />
+              <Card key={idx} className="group overflow-hidden border-none bg-slate-50 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 rounded-[40px]">
+                <div className="h-64 overflow-hidden relative">
+                  <img src={service.img} alt={service.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors duration-500" />
                 </div>
-                <h4 className="text-xl font-bold text-primary mb-4">{service.title}</h4>
-                <p className="text-gray-600 text-sm leading-relaxed">{service.desc}</p>
+                <div className="p-8 space-y-3">
+                  <h4 className="text-2xl font-black text-slate-800 tracking-tight group-hover:text-secondary transition-colors">{service.title}</h4>
+                  <p className="text-slate-500 text-sm font-medium leading-relaxed">{service.desc}</p>
+                </div>
               </Card>
             ))}
           </div>
@@ -117,17 +124,17 @@ export default async function Home() {
 
       {/* Stats / CTA */}
       <section className="py-20 bg-primary relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/10 rounded-full -mr-32 -mt-32 blur-3xl" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/10 rounded-full -mr-32 -mt-32 blur-3xl animate-pulse" />
         <div className="container mx-auto px-4 md:px-6 relative z-10 text-center text-white space-y-8">
-          <h2 className="text-4xl md:text-6xl font-bold max-w-4xl mx-auto leading-tight">
-            Ready to Start Your <span className="text-secondary">Success Story?</span>
+          <h2 className="text-4xl md:text-7xl font-black max-w-4xl mx-auto leading-[1.1] tracking-tighter">
+            Build Your <span className="text-secondary italic">Global Career</span> Starting Today
           </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Join thousands of successful students who achieved their dreams with CSEC.
+          <p className="text-xl text-slate-300 max-w-2xl mx-auto font-medium">
+            Join 10,000+ graduates already shining in top global organizations.
           </p>
           <div className="flex justify-center pt-8">
             <Link href="/contact">
-              <Button size="lg" className="bg-secondary hover:bg-white hover:text-primary text-primary font-bold px-12 h-16 rounded-full transition-all duration-300">
+              <Button size="lg" className="bg-secondary hover:bg-white hover:text-primary text-primary font-black px-12 h-20 rounded-2xl text-xl transition-all duration-500 shadow-3xl shadow-secondary/20">
                 Talk to an Expert Now
               </Button>
             </Link>
@@ -136,27 +143,32 @@ export default async function Home() {
       </section>
 
       {/* Featured Courses */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-slate-50 relative overflow-hidden">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex justify-between items-end mb-12">
-            <div>
-              <h2 className="text-sm font-bold tracking-widest text-secondary uppercase mb-2">Popular</h2>
-              <h3 className="text-4xl font-bold text-primary">Featured Courses</h3>
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+            <div className="space-y-2">
+              <h2 className="text-[10px] font-black tracking-[0.3em] text-secondary uppercase bg-white inline-block px-4 py-2 rounded-full border border-slate-100">Top Programs</h2>
+              <h3 className="text-5xl font-black text-primary tracking-tighter">Premier <span className="text-secondary italic">Courses</span></h3>
             </div>
-            <Link href="/courses" className="text-primary font-bold flex items-center hover:text-secondary">
-              View All <ArrowRight className="ml-2 w-5 h-5" />
+            <Link href="/courses" className="bg-white px-8 py-4 rounded-2xl text-primary font-black flex items-center hover:bg-primary hover:text-white transition-all duration-300 shadow-sm">
+              View All Courses <ArrowRight className="ml-2 w-5 h-5" />
             </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {courses.length > 0 ? courses.map((course) => (
-              <Card key={course.id} className="group hover:-translate-y-2 transition-transform duration-300">
-                <div className="h-48 bg-gray-100 flex items-center justify-center p-8 group-hover:bg-primary/5 transition-colors">
-                  <GraduationCap className="w-16 h-16 text-primary/20 group-hover:text-primary transition-colors" />
+              <Card key={course.id} className="group overflow-hidden border-none bg-white transition-all duration-500 hover:shadow-2xl rounded-[40px]">
+                <div className="h-56 overflow-hidden relative">
+                  <img 
+                    src={course.image || "https://images.unsplash.com/photo-1523050335392-9ae86eb197ee?q=80&w=800&auto=format&fit=crop"} 
+                    alt={course.title} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                 </div>
-                <CardContent className="space-y-2">
-                  <h4 className="text-xl font-bold text-primary">{course.title}</h4>
-                  <p className="text-gray-500 text-sm line-clamp-2">{course.description}</p>
+                <CardContent className="p-8 space-y-2">
+                  <h4 className="text-2xl font-black text-slate-800 tracking-tight leading-none mb-4">{course.title}</h4>
+                  <p className="text-slate-400 text-sm font-medium line-clamp-2 leading-relaxed">{course.description}</p>
                 </CardContent>
               </Card>
             )) : (
