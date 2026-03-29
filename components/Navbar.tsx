@@ -31,16 +31,24 @@ export const Navbar = ({ settings }: { settings: any }) => {
         >
             <div className="container mx-auto px-6 md:px-12">
                 <div className="flex items-center justify-between">
-                    <Link href="/" className="flex items-center shrink-0 group">
-                        <div className="relative h-12 md:h-16 w-40 md:w-56 flex items-center justify-start transition-all duration-500 hover:scale-105">
-                            <img 
-                                src="/logo.jpg" 
-                                alt="CSEC Gwalior Logo" 
-                                className="h-full w-auto object-contain object-left"
-                                loading="eager"
-                            />
+                    <div className="flex items-center space-x-2 md:space-x-4">
+                        <Link href="/" className="flex items-center shrink-0 group">
+                            <div className="relative h-12 md:h-16 w-32 md:w-48 flex items-center justify-start transition-all duration-500 hover:scale-105">
+                                <img 
+                                    src="/logo.jpg" 
+                                    alt="CSEC Gwalior Logo" 
+                                    className="h-full w-auto object-contain object-left"
+                                    loading="eager"
+                                />
+                            </div>
+                        </Link>
+                        <div className="flex flex-col justify-center border-l-2 border-secondary/30 pl-3 md:pl-4 h-10 md:h-12">
+                            <span className="text-[8px] md:text-sm font-black text-primary leading-tight tracking-tighter uppercase opacity-40">Welcome to</span>
+                            <span className="text-[10px] md:text-lg font-black bg-gradient-to-r from-primary via-slate-700 to-primary bg-clip-text text-transparent leading-none tracking-tight uppercase whitespace-nowrap">
+                                Career Solution <span className="text-secondary italic">Education Consultancy</span>
+                            </span>
                         </div>
-                    </Link>
+                    </div>
 
                     {/* Desktop Nav */}
                     <div className="hidden lg:flex items-center space-x-10">
@@ -74,9 +82,6 @@ export const Navbar = ({ settings }: { settings: any }) => {
 
                     {/* Mobile Menu Button */}
                     <div className="flex items-center space-x-4 lg:hidden">
-                        <Link href="/contact" className="w-10 h-10 bg-secondary/10 rounded-xl flex items-center justify-center text-primary border border-secondary/20">
-                            <Phone className="w-5 h-5" />
-                        </Link>
                         <button 
                             className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-white shadow-lg active:scale-95 transition-all" 
                             onClick={() => setIsOpen(!isOpen)}
