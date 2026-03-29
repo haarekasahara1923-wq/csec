@@ -34,9 +34,10 @@ export const Navbar = ({ settings }: { settings: any }) => {
                     <Link href="/" className="flex items-center space-x-3 group">
                         <div className="relative h-12 md:h-16 w-auto flex items-center justify-center overflow-hidden transition-all duration-500 hover:scale-105">
                             <img 
-                                src="/logo.png" 
+                                src="/logo.jpg" 
                                 alt="CSEC Gwalior Logo" 
                                 className="h-full w-auto object-contain"
+                                loading="eager"
                             />
                         </div>
                     </Link>
@@ -100,7 +101,7 @@ export const Navbar = ({ settings }: { settings: any }) => {
                              <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-3">
                                 <div className="h-10 w-auto flex items-center justify-center overflow-hidden">
                                     <img 
-                                        src="/logo.png" 
+                                        src="/logo.jpg" 
                                         alt="CSEC Gwalior Logo" 
                                         className="h-full w-auto object-contain"
                                     />
