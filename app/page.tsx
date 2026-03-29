@@ -161,7 +161,7 @@ export default async function Home() {
               let courseImage = course.image;
               if (!courseImage) {
                 const title = course.title.toLowerCase();
-                if (title.includes('mbbs')) courseImage = "https://images.unsplash.com/photo-1576091160550-217359f47f6a?q=80&w=800&auto=format&fit=crop";
+                if (title.includes('mbbs') || title.includes('medicine')) courseImage = "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=800&auto=format&fit=crop";
                 else if (title.includes('b.tech') || title.includes('engineering') || title.includes('btech')) courseImage = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop";
                 else if (title.includes('mba')) courseImage = "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop";
                 else if (title.includes('bba')) courseImage = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop";
@@ -175,6 +175,7 @@ export default async function Home() {
                       src={courseImage || "https://images.unsplash.com/photo-1523050335392-9ae86eb197ee?q=80&w=800&auto=format&fit=crop"} 
                       alt={course.title} 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                   </div>
@@ -198,9 +199,10 @@ export default async function Home() {
             <div className="relative">
               <div className="aspect-square bg-gray-200 rounded-2xl overflow-hidden shadow-2xl">
                 <img
-                  src="https://images.unsplash.com/photo-1523050335392-9ae86eb197ee?q=80&w=1000&auto=format&fit=crop"
-                  alt="Students"
+                  src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1000&auto=format&fit=crop"
+                  alt="Students Studying"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </div>
               <div className="absolute -bottom-10 -right-10 bg-white p-8 rounded-2xl shadow-xl hidden md:block">
