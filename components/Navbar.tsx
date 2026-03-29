@@ -25,85 +25,129 @@ export const Navbar = ({ settings }: { settings: any }) => {
     return (
         <nav
             className={cn(
-                "fixed top-0 w-full z-50 transition-all duration-300",
-                scrolled ? "bg-white/90 backdrop-blur-md shadow-md py-2" : "bg-transparent py-4"
+                "fixed top-0 w-full z-50 transition-all duration-500",
+                scrolled ? "royal-glass py-4 shadow-2xl" : "bg-transparent py-8"
             )}
         >
-            <div className="container mx-auto px-4 md:px-6">
+            <div className="container mx-auto px-6 md:px-12">
                 <div className="flex items-center justify-between">
-                    <Link href="/" className="flex items-center space-x-2">
-                        <GraduationCap className={cn("w-10 h-10", scrolled ? "text-primary" : "text-primary")} />
-                        <div>
-                            <span className={cn("text-2xl font-bold block leading-none", scrolled ? "text-primary" : "text-primary")}>
+                    <Link href="/" className="flex items-center space-x-3 group">
+                        <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform duration-500 border border-white/10">
+                            <GraduationCap className="w-7 h-7 text-secondary" />
+                        </div>
+                        <div className="flex flex-col">
+                            <span className={cn("text-3xl font-black tracking-tighter leading-none transition-colors", scrolled ? "text-primary" : "text-primary")}>
                                 CSEC
                             </span>
-                            <span className={cn("text-[10px] uppercase tracking-widest font-semibold block", scrolled ? "text-secondary" : "text-secondary")}>
-                                Education Consultancy
+                            <span className="text-[10px] uppercase tracking-[0.3em] font-black text-secondary">
+                                Gwalior
                             </span>
                         </div>
                     </Link>
 
                     {/* Desktop Nav */}
-                    <div className="hidden lg:flex items-center space-x-8">
+                    <div className="hidden lg:flex items-center space-x-10">
                         {siteConfig.nav.map((item) => (
                             <Link
                                 key={item.href}
                                 href={item.href}
                                 className={cn(
-                                    "text-sm font-medium transition-colors hover:text-secondary",
+                                    "text-sm font-black uppercase tracking-widest transition-all hover:text-secondary group relative",
                                     pathname === item.href ? "text-secondary" : "text-primary"
                                 )}
                             >
                                 {item.title}
+                                <span className={cn(
+                                    "absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all group-hover:w-full",
+                                    pathname === item.href ? "w-full" : ""
+                                )} />
                             </Link>
                         ))}
                         <Link href="/partner/register">
-                            <Button variant="outline" size="sm" className="border-[#1a56db] text-[#1a56db] hover:bg-[#1a56db] hover:text-white">
-                                Become a Partner
+                            <Button variant="outline" className="border-primary/20 text-primary font-black uppercase tracking-widest text-[10px] h-12 rounded-xl px-6 hover:bg-primary hover:text-white transition-all">
+                                Partner
                             </Button>
                         </Link>
                         <Link href="/apply">
-                            <Button size="sm" className="shadow-lg shadow-secondary/20">
-                                Apply Now
+                            <Button className="font-black uppercase tracking-widest text-[10px] h-12 rounded-xl px-8 shadow-xl shadow-primary/20 hover:shadow-secondary/40 transition-all">
+                                Apply
                             </Button>
                         </Link>
                     </div>
 
                     {/* Mobile Menu Button */}
-                    <button className="lg:hidden text-primary" onClick={() => setIsOpen(!isOpen)}>
-                        {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-                    </button>
+                    <div className="flex items-center space-x-4 lg:hidden">
+                        <Link href="/contact" className="w-10 h-10 bg-secondary/10 rounded-xl flex items-center justify-center text-primary border border-secondary/20">
+                            <Phone className="w-5 h-5" />
+                        </Link>
+                        <button 
+                            className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-white shadow-lg active:scale-95 transition-all" 
+                            onClick={() => setIsOpen(!isOpen)}
+                        >
+                            {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            {/* Mobile Nav */}
+            {/* Mobile Nav Overlay */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="lg:hidden bg-white border-t border-gray-100 overflow-hidden"
+                        initial={{ opacity: 0, x: "100%" }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: "100%" }}
+                        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                        className="fixed inset-0 z-40 lg:hidden bg-primary/95 backdrop-blur-2xl flex flex-col p-12 touch-none overflow-y-auto"
                     >
-                        <div className="flex flex-col p-4 space-y-4">
-                            {siteConfig.nav.map((item) => (
-                                <Link
-                                    key={item.href}
-                                    href={item.href}
-                                    className={cn(
-                                        "text-lg font-medium py-2 border-b border-gray-50",
-                                        pathname === item.href ? "text-secondary" : "text-primary"
-                                    )}
-                                    onClick={() => setIsOpen(false)}
-                                >
-                                    {item.title}
-                                </Link>
-                            ))}
-                            <Link href="/partner/register" onClick={() => setIsOpen(false)}>
-                                <Button variant="outline" className="w-full border-[#1a56db] text-[#1a56db] hover:bg-[#1a56db] hover:text-white">Become a Partner</Button>
+                        <div className="flex justify-between items-center mb-16">
+                             <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-3">
+                                <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center">
+                                    <GraduationCap className="w-6 h-6 text-primary" />
+                                </div>
+                                <span className="text-2xl font-black text-white tracking-tighter">CSEC</span>
                             </Link>
-                            <Link href="/apply" onClick={() => setIsOpen(false)}>
-                                <Button className="w-full">Apply Now</Button>
+                            <button 
+                                className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white border border-white/10" 
+                                onClick={() => setIsOpen(false)}
+                            >
+                                <X className="w-7 h-7" />
+                            </button>
+                        </div>
+
+                        <div className="space-y-4 flex flex-col">
+                            {siteConfig.nav.map((item, idx) => (
+                                <motion.div
+                                    key={item.href}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: idx * 0.1 }}
+                                >
+                                    <Link
+                                        href={item.href}
+                                        className={cn(
+                                            "text-4xl font-black tracking-tighter transition-all block py-4",
+                                            pathname === item.href ? "text-secondary italic" : "text-white/60 hover:text-white"
+                                        )}
+                                        onClick={() => setIsOpen(false)}
+                                    >
+                                        {item.title}
+                                    </Link>
+                                </motion.div>
+                            ))}
+                        </div>
+
+                        <div className="mt-auto space-y-6">
+                            <div className="h-[1px] bg-white/10 w-full mb-8" />
+                            <Link href="/partner/register" onClick={() => setIsOpen(false)} className="block">
+                                <Button variant="outline" className="w-full h-16 rounded-2xl border-white/20 text-white font-black text-lg uppercase tracking-widest hover:bg-white hover:text-primary transition-all">
+                                    Become a Partner
+                                </Button>
+                            </Link>
+                            <Link href="/apply" onClick={() => setIsOpen(false)} className="block">
+                                <Button className="w-full h-16 rounded-2xl font-black text-lg uppercase tracking-widest bg-secondary text-primary shadow-2xl shadow-secondary/20 transition-all">
+                                    Apply Now
+                                </Button>
                             </Link>
                         </div>
                     </motion.div>
