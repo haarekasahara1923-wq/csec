@@ -86,6 +86,7 @@ model Partner {
   country           String?
   city              String?
   organization      String?
+  paymentDetails    Json?
   totalEarnings     Float    @default(0)
   pendingEarnings   Float    @default(0)
   paidEarnings      Float    @default(0)
