@@ -156,22 +156,35 @@ export default async function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {courses.length > 0 ? courses.map((course) => (
-              <Card key={course.id} className="group overflow-hidden border-none bg-white transition-all duration-500 hover:shadow-2xl rounded-[40px]">
-                <div className="h-56 overflow-hidden relative">
-                  <img 
-                    src={course.image || "https://images.unsplash.com/photo-1523050335392-9ae86eb197ee?q=80&w=800&auto=format&fit=crop"} 
-                    alt={course.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                </div>
-                <CardContent className="p-8 space-y-2">
-                  <h4 className="text-2xl font-black text-slate-800 tracking-tight leading-none mb-4">{course.title}</h4>
-                  <p className="text-slate-400 text-sm font-medium line-clamp-2 leading-relaxed">{course.description}</p>
-                </CardContent>
-              </Card>
-            )) : (
+            {courses.length > 0 ? courses.map((course) => {
+              // Specific images for popular courses
+              let courseImage = course.image;
+              if (!courseImage) {
+                const title = course.title.toLowerCase();
+                if (title.includes('mbbs')) courseImage = "https://images.unsplash.com/photo-1576091160550-217359f47f6a?q=80&w=800&auto=format&fit=crop";
+                else if (title.includes('b.tech') || title.includes('engineering') || title.includes('btech')) courseImage = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop";
+                else if (title.includes('mba')) courseImage = "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop";
+                else if (title.includes('bba')) courseImage = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop";
+                else courseImage = "https://images.unsplash.com/photo-1523050335392-9ae86eb197ee?q=80&w=800&auto=format&fit=crop";
+              }
+
+              return (
+                <Card key={course.id} className="group overflow-hidden border-none bg-white transition-all duration-500 hover:shadow-2xl rounded-[40px]">
+                  <div className="h-56 overflow-hidden relative">
+                    <img 
+                      src={courseImage || "https://images.unsplash.com/photo-1523050335392-9ae86eb197ee?q=80&w=800&auto=format&fit=crop"} 
+                      alt={course.title} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                  </div>
+                  <CardContent className="p-8 space-y-2">
+                    <h4 className="text-2xl font-black text-slate-800 tracking-tight leading-none mb-4">{course.title}</h4>
+                    <p className="text-slate-400 text-sm font-medium line-clamp-2 leading-relaxed">{course.description}</p>
+                  </CardContent>
+                </Card>
+              );
+            }) : (
               <p className="text-gray-500 col-span-full text-center">No courses found. Add them in admin panel.</p>
             )}
           </div>
