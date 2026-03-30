@@ -81,7 +81,7 @@ export default function AboutPage() {
                         </div>
                         <div className="space-y-6 group">
                             <div className="w-56 h-56 bg-white rounded-full mx-auto overflow-hidden shadow-2xl border-8 border-white group-hover:scale-105 transition-transform duration-500">
-                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=CEO" alt="Girraj Sharma" className="w-full h-full object-cover" />
+                                <img src="/girraj-sharma.jpg" alt="Girraj Sharma" className="w-full h-full object-cover" />
                             </div>
                             <div className="space-y-2">
                                 <h4 className="text-3xl font-black text-primary tracking-tight">Girraj Sharma</h4>
