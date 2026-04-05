@@ -10,11 +10,12 @@ export const Footer = ({ settings }: { settings: any }) => {
                     {/* Logo & Info */}
                     <div className="space-y-6">
                         <Link href="/" className="flex items-center space-x-2">
-                            <div className="bg-white px-6 py-4 rounded-3xl group-hover:scale-105 transition-transform duration-500">
+                            <div className="bg-white px-8 py-5 rounded-[2rem] group-hover:scale-105 transition-all duration-500 shadow-2xl relative overflow-hidden">
+                                <div className="absolute inset-0 bg-gradient-to-br from-white to-slate-100 opacity-40" />
                                 <img 
                                     src="/logo_new.png" 
                                     alt="CSEC Logo" 
-                                    className="h-20 md:h-24 w-auto object-contain" 
+                                    className="h-20 md:h-24 w-auto object-contain relative z-10 contrast-[1.05]" 
                                 />
                             </div>
                         </Link>

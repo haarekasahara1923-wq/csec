@@ -34,11 +34,12 @@ export const Navbar = ({ settings }: { settings: any }) => {
                     {/* Logo & Branding */}
                     <div className="flex items-center shrink-0">
                         <Link href="/" className="flex items-center group">
-                            <div className="relative h-16 md:h-20 w-auto flex items-center justify-center transition-all duration-500 hover:scale-105 bg-white px-4 py-2 rounded-2xl shadow-xl shadow-primary/10 border border-white/20">
+                            <div className="relative h-16 md:h-22 w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-5 py-3 rounded-[24px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden">
+                                <div className="absolute inset-0 bg-gradient-to-br from-white via-slate-50 to-white/80 opacity-50" />
                                 <img 
                                     src="/logo_new.png" 
                                     alt="CSEC Logo" 
-                                    className="h-full w-auto object-contain"
+                                    className="h-full w-auto object-contain relative z-10 brightness-[1.02] contrast-[1.05]"
                                     loading="eager"
                                 />
                             </div>
