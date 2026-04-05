@@ -34,7 +34,7 @@ export const Navbar = ({ settings }: { settings: any }) => {
                     {/* Logo & Branding */}
                     <div className="flex items-center shrink-0">
                         <Link href="/" className="flex items-center group gap-3">
-                            <div className="relative h-14 md:h-20 w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-2 py-1 md:px-3 rounded-[16px] md:rounded-[20px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden shrink-0">
+                            <div className="relative h-14 md:h-40 w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-2 py-1 md:px-3 md:py-2 rounded-[16px] md:rounded-[24px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden shrink-0">
                                 <img 
                                     src="/logo_new.png" 
                                     alt="CSEC Logo" 
