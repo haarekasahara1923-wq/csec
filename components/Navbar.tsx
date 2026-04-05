@@ -45,20 +45,20 @@ export const Navbar = ({ settings }: { settings: any }) => {
                         </Link>
                     </div>
 
-                    {/* Desktop Nav - Moved closer to branding */}
-                    <div className="hidden lg:flex items-center space-x-2 xl:space-x-4 ml-6 xl:ml-10">
+                    {/* Desktop Nav - Better Spacing & Size */}
+                    <div className="hidden lg:flex items-center space-x-6 xl:space-x-10 ml-12 xl:ml-20">
                         {siteConfig.nav.map((item) => (
                             <Link
                                 key={item.href}
                                 href={item.href}
                                 className={cn(
-                                    "text-[10px] xl:text-[11px] font-black uppercase tracking-tighter transition-all hover:text-secondary group relative whitespace-nowrap",
+                                    "text-[12px] xl:text-[13px] font-black uppercase tracking-wider transition-all hover:text-secondary group relative whitespace-nowrap",
                                     pathname === item.href ? "text-secondary" : "text-primary"
                                 )}
                             >
                                 {item.title}
                                 <span className={cn(
-                                    "absolute -bottom-1 left-0 w-0 h-0.5 bg-secondary transition-all group-hover:w-full",
+                                    "absolute -bottom-2 left-0 w-0 h-1 bg-secondary transition-all duration-300 group-hover:w-full",
                                     pathname === item.href ? "w-full" : ""
                                 )} />
                             </Link>
@@ -66,14 +66,14 @@ export const Navbar = ({ settings }: { settings: any }) => {
                     </div>
 
                     {/* Right Action Buttons */}
-                    <div className="hidden lg:flex items-center space-x-2 ml-auto">
-                        <Link href="/partner/register">
-                            <Button variant="outline" className="border-primary/20 text-primary font-black uppercase tracking-widest text-[9px] h-10 rounded-xl px-4 hover:bg-primary hover:text-white transition-all">
+                    <div className="hidden lg:flex items-center space-x-4 ml-auto">
+                        <Link href="/partner/register" className="h-full">
+                            <Button variant="outline" className="border-primary/20 text-primary font-black uppercase tracking-widest text-[10px] h-12 rounded-2xl px-6 hover:bg-primary hover:text-white transition-all">
                                 Partner
                             </Button>
                         </Link>
-                        <Link href="/apply">
-                            <Button className="font-black uppercase tracking-widest text-[9px] h-10 rounded-xl px-6 shadow-xl shadow-primary/20 hover:shadow-secondary/40 transition-all">
+                        <Link href="/apply" className="h-full">
+                            <Button className="font-black uppercase tracking-widest text-[10px] h-12 rounded-2xl px-8 shadow-xl shadow-primary/20 hover:shadow-secondary/40 transition-all bg-secondary text-primary">
                                 Apply
                             </Button>
                         </Link>
