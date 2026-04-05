@@ -53,4 +53,16 @@ export const siteConfig = {
             ],
         },
     ],
+    projects: {
+        title: "Our Precious Projects",
+        items: [
+            { title: "It's Me - Unified Link & QR", href: "https://wapiflow.site" },
+            { title: "Coachpro", href: "https://coachpro.wapiflow.site" },
+            { title: "Docters Management", href: "https://docterz.wapiflow.site" },
+            { title: "Astrologers", href: "https://jyotish.wapiflow.site" },
+            { title: "Instalocal - Social Ad Network", href: "https://instalocal.wapiflow.site" },
+            { title: "Influencers Market", href: "https://influencerconnect.wapiflow.site" },
+            { title: "Social Media Management", href: "https://nvstudio.wapiflow.site" },
+        ],
+    },
 };
