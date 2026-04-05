@@ -46,13 +46,13 @@ export const Navbar = ({ settings }: { settings: any }) => {
                     </div>
 
                     {/* Desktop Nav - Better Spacing & Size */}
-                    <div className="hidden lg:flex items-center space-x-6 xl:space-x-10 ml-12 xl:ml-20">
+                    <div className="hidden lg:flex items-center space-x-3 xl:space-x-6 ml-auto lg:ml-8 mr-auto">
                         {siteConfig.nav.map((item) => (
                             <Link
                                 key={item.href}
                                 href={item.href}
                                 className={cn(
-                                    "text-[12px] xl:text-[13px] font-black uppercase tracking-wider transition-all hover:text-secondary group relative whitespace-nowrap",
+                                    "text-[10px] xl:text-[11px] font-black uppercase tracking-wide transition-all hover:text-secondary group relative whitespace-nowrap",
                                     pathname === item.href ? "text-secondary" : "text-primary"
                                 )}
                             >
@@ -66,14 +66,14 @@ export const Navbar = ({ settings }: { settings: any }) => {
                     </div>
 
                     {/* Right Action Buttons */}
-                    <div className="hidden lg:flex items-center space-x-4 ml-auto">
+                    <div className="hidden lg:flex items-center space-x-2 xl:space-x-3 ml-auto">
                         <Link href="/partner/register" className="h-full">
-                            <Button variant="outline" className="border-primary/20 text-primary font-black uppercase tracking-widest text-[10px] h-12 rounded-2xl px-6 hover:bg-primary hover:text-white transition-all">
+                            <Button variant="outline" className="border-primary/20 text-primary font-black uppercase tracking-widest text-[10px] h-10 xl:h-12 rounded-2xl px-4 xl:px-6 hover:bg-primary hover:text-white transition-all">
                                 Partner
                             </Button>
                         </Link>
                         <Link href="/apply" className="h-full">
-                            <Button className="font-black uppercase tracking-widest text-[10px] h-12 rounded-2xl px-8 shadow-xl shadow-primary/20 hover:shadow-secondary/40 transition-all bg-secondary text-primary">
+                            <Button className="font-black uppercase tracking-widest text-[10px] h-10 xl:h-12 rounded-2xl px-6 xl:px-8 shadow-xl shadow-primary/20 hover:shadow-secondary/40 transition-all bg-secondary text-primary">
                                 Apply
                             </Button>
                         </Link>
