@@ -26,15 +26,15 @@ export const Navbar = ({ settings }: { settings: any }) => {
         <nav
             className={cn(
                 "fixed top-0 w-full z-50 transition-all duration-500",
-                scrolled ? "royal-glass py-4 shadow-2xl" : "bg-transparent py-8"
+                scrolled ? "royal-glass py-3 md:py-4 shadow-2xl" : "bg-transparent py-4 md:py-6"
             )}
         >
             <div className="container mx-auto px-6 md:px-12">
-                <div className="flex items-center w-full">
+                <div className="flex items-center justify-between w-full">
                     {/* Logo & Branding */}
                     <div className="flex items-center shrink-0">
                         <Link href="/" className="flex items-center group gap-3">
-                            <div className="relative h-14 md:h-40 w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-2 py-1 md:px-3 md:py-2 rounded-[16px] md:rounded-[24px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden shrink-0">
+                            <div className="relative h-14 md:h-20 w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-2 py-1 md:px-3 rounded-[16px] md:rounded-[20px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden shrink-0">
                                 <img 
                                     src="/logo_new.png" 
                                     alt="CSEC Logo" 
@@ -59,28 +59,44 @@ export const Navbar = ({ settings }: { settings: any }) => {
                         </Link>
                     </div>
 
-                    {/* Desktop Nav - Better Spacing & Size */}
-                    <div className="hidden lg:flex items-center space-x-3 xl:space-x-6 ml-auto lg:ml-8 mr-auto">
-                        {siteConfig.nav.map((item) => (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                className={cn(
-                                    "text-[10px] xl:text-[11px] font-black uppercase tracking-wide transition-all hover:text-secondary group relative whitespace-nowrap",
-                                    pathname === item.href ? "text-secondary" : "text-primary"
-                                )}
-                            >
-                                {item.title}
-                                <span className={cn(
-                                    "absolute -bottom-2 left-0 w-0 h-1 bg-secondary transition-all duration-300 group-hover:w-full",
-                                    pathname === item.href ? "w-full" : ""
-                                )} />
-                            </Link>
-                        ))}
+                    {/* Desktop Nav Title & Menu */}
+                    <div className="hidden lg:flex flex-col items-center justify-center gap-2 mx-auto">
+                        <div className="flex flex-col items-center text-center">
+                            <span className={cn(
+                                "text-[18px] xl:text-[22px] font-black leading-tight tracking-tight",
+                                scrolled ? "text-primary" : "text-primary"
+                            )}>
+                                Career Solution
+                            </span>
+                            <span className={cn(
+                                "text-[12px] xl:text-[14px] font-bold leading-tight tracking-wide",
+                                scrolled ? "text-secondary" : "text-secondary"
+                            )}>
+                                Education Consultancy
+                            </span>
+                        </div>
+                        <div className="flex items-center space-x-3 xl:space-x-6">
+                            {siteConfig.nav.map((item) => (
+                                <Link
+                                    key={item.href}
+                                    href={item.href}
+                                    className={cn(
+                                        "text-[10px] xl:text-[11px] font-black uppercase tracking-wide transition-all hover:text-secondary group relative whitespace-nowrap",
+                                        pathname === item.href ? "text-secondary" : "text-primary"
+                                    )}
+                                >
+                                    {item.title}
+                                    <span className={cn(
+                                        "absolute -bottom-2 left-0 w-0 h-1 bg-secondary transition-all duration-300 group-hover:w-full",
+                                        pathname === item.href ? "w-full" : ""
+                                    )} />
+                                </Link>
+                            ))}
+                        </div>
                     </div>
 
                     {/* Right Action Buttons */}
-                    <div className="hidden lg:flex items-center space-x-2 xl:space-x-3 ml-auto">
+                    <div className="hidden lg:flex items-center space-x-2 xl:space-x-3 shrink-0">
                         <Link href="/partner/register" className="h-full">
                             <Button variant="outline" className="border-primary/20 text-primary font-black uppercase tracking-widest text-[10px] h-10 xl:h-12 rounded-2xl px-4 xl:px-6 hover:bg-primary hover:text-white transition-all">
                                 Partner
