@@ -34,7 +34,7 @@ export const Navbar = ({ settings }: { settings: any }) => {
                     {/* Logo & Branding */}
                     <div className="flex items-center shrink-0">
                         <Link href="/" className="flex items-center group">
-                            <div className="relative h-20 md:h-32 w-auto flex items-center justify-center transition-all duration-500 hover:scale-105">
+                            <div className="relative h-16 md:h-20 w-auto flex items-center justify-center transition-all duration-500 hover:scale-105 bg-white px-4 py-2 rounded-2xl shadow-xl shadow-primary/10 border border-white/20">
                                 <img 
                                     src="/logo_new.png" 
                                     alt="CSEC Logo" 
@@ -103,7 +103,7 @@ export const Navbar = ({ settings }: { settings: any }) => {
                     >
                         <div className="flex justify-between items-center mb-16">
                               <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-3">
-                                <div className="h-20 w-auto flex items-center justify-center overflow-hidden bg-white/10 backdrop-blur rounded-2xl p-2">
+                                <div className="h-16 md:h-20 w-auto flex items-center justify-center overflow-hidden bg-white rounded-2xl px-4 py-2 shadow-xl border border-white/20">
                                      <img 
                                          src="/logo_new.png" 
                                          alt="CSEC Logo" 
