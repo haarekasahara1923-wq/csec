@@ -33,14 +33,28 @@ export const Navbar = ({ settings }: { settings: any }) => {
                 <div className="flex items-center w-full">
                     {/* Logo & Branding */}
                     <div className="flex items-center shrink-0">
-                        <Link href="/" className="flex items-center group">
-                            <div className="relative h-24 md:h-40 w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-3 py-2 rounded-[24px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden">
+                        <Link href="/" className="flex items-center group gap-3">
+                            <div className="relative h-14 md:h-40 w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-2 py-1 md:px-3 md:py-2 rounded-[16px] md:rounded-[24px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden shrink-0">
                                 <img 
                                     src="/logo_new.png" 
                                     alt="CSEC Logo" 
                                     className="h-full w-auto object-contain relative z-10 brightness-[1.05] contrast-[1.1]"
                                     loading="eager"
                                 />
+                            </div>
+                            <div className="flex flex-col lg:hidden justify-center text-left">
+                                <span className={cn(
+                                    "text-[15px] sm:text-[18px] font-black leading-tight tracking-tight",
+                                    scrolled ? "text-primary" : "text-primary md:text-white"
+                                )}>
+                                    Career Solution
+                                </span>
+                                <span className={cn(
+                                    "text-[11px] sm:text-[13px] font-bold leading-tight tracking-wide",
+                                    scrolled ? "text-secondary" : "text-secondary md:text-white/80"
+                                )}>
+                                    Education Consultancy
+                                </span>
                             </div>
                         </Link>
                     </div>
@@ -102,13 +116,21 @@ export const Navbar = ({ settings }: { settings: any }) => {
                         className="fixed inset-0 z-40 lg:hidden bg-primary/95 backdrop-blur-2xl flex flex-col p-8 md:p-12 overflow-y-auto overscroll-contain"
                     >
                         <div className="flex justify-between items-center mb-16">
-                              <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-3">
-                                <div className="h-24 w-auto flex items-center justify-center overflow-hidden bg-white rounded-2xl px-3 py-2 shadow-2xl border border-white/20">
+                              <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center gap-3">
+                                <div className="h-14 w-auto flex items-center justify-center overflow-hidden bg-white rounded-[16px] px-2 py-1 shadow-2xl border border-white/20 shrink-0">
                                      <img 
                                          src="/logo_new.png" 
                                          alt="CSEC Logo" 
                                          className="h-full w-auto object-contain brightness-[1.05] contrast-[1.1]"
                                      />
+                                 </div>
+                                 <div className="flex flex-col justify-center text-left">
+                                     <span className="text-[15px] sm:text-[18px] font-black leading-tight tracking-tight text-white">
+                                         Career Solution
+                                     </span>
+                                     <span className="text-[11px] sm:text-[13px] font-bold leading-tight tracking-wide text-secondary/90">
+                                         Education Consultancy
+                                     </span>
                                  </div>
                             </Link>
                             <button 
