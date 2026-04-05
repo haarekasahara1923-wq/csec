@@ -11,6 +11,8 @@ export const siteConfig = {
         email: "csecgwl@gmail.com",
         phone: "+91 99931 16644",
         address: "Near Gwalior Trade Fair Ground, Gwalior, MP, India",
+        delhiAddress: "Flat No.35, Sector E2, Vasant Kunj, South Delhi, Delhi-110070",
+        delhiPhone: "+91 8377985208",
     },
     nav: [
         { title: "Home", href: "/" },

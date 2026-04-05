@@ -34,23 +34,15 @@ export const Navbar = ({ settings }: { settings: any }) => {
                     {/* Logo & Branding */}
                     <div className="flex items-center shrink-0">
                         <Link href="/" className="flex items-center group">
-                            <div className="relative h-10 md:h-16 w-auto flex items-center justify-center transition-all duration-500 hover:scale-105">
+                            <div className="relative h-14 md:h-24 w-auto flex items-center justify-center transition-all duration-500 hover:scale-105">
                                 <img 
-                                    src="/logo.jpg" 
-                                    alt="CSEC Gwalior Logo" 
+                                    src="/logo_new.png" 
+                                    alt="CSEC Logo" 
                                     className="h-full w-auto object-contain"
                                     loading="eager"
                                 />
                             </div>
                         </Link>
-                        <div className="flex flex-col justify-center border-l-2 border-secondary/20 pl-2 md:pl-3 h-10 md:h-12 ml-1.5 md:ml-2">
-                            <span className="text-[11px] md:text-xl font-black bg-gradient-to-r from-primary via-slate-700 to-primary bg-clip-text text-transparent leading-none uppercase tracking-tighter">
-                                Career Solution
-                            </span>
-                            <span className="text-[9px] md:text-sm font-bold text-secondary italic leading-none uppercase mt-0.5 whitespace-nowrap">
-                                Education Consultancy
-                            </span>
-                        </div>
                     </div>
 
                     {/* Desktop Nav - Moved closer to branding */}
@@ -111,13 +103,13 @@ export const Navbar = ({ settings }: { settings: any }) => {
                     >
                         <div className="flex justify-between items-center mb-16">
                              <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center space-x-3">
-                                <div className="h-10 w-auto flex items-center justify-center overflow-hidden">
-                                    <img 
-                                        src="/logo.jpg" 
-                                        alt="CSEC Gwalior Logo" 
-                                        className="h-full w-auto object-contain"
-                                    />
-                                </div>
+                                <div className="h-16 w-auto flex items-center justify-center overflow-hidden">
+                                     <img 
+                                         src="/logo_new.png" 
+                                         alt="CSEC Logo" 
+                                         className="h-full w-auto object-contain"
+                                     />
+                                 </div>
                             </Link>
                             <button 
                                 className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white border border-white/10" 

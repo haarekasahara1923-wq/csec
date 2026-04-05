@@ -10,12 +10,12 @@ export const Footer = ({ settings }: { settings: any }) => {
                     {/* Logo & Info */}
                     <div className="space-y-6">
                         <Link href="/" className="flex items-center space-x-2">
-                            <GraduationCap className="w-10 h-10 text-secondary" />
-                            <div>
-                                <span className="text-2xl font-bold block leading-none text-white">CSEC</span>
-                                <span className="text-[10px] uppercase tracking-widest font-semibold block text-secondary">
-                                    Education Consultancy
-                                </span>
+                            <div className="bg-white p-2 rounded-xl">
+                                <img 
+                                    src="/logo_new.png" 
+                                    alt="CSEC Logo" 
+                                    className="h-12 md:h-16 w-auto object-contain" 
+                                />
                             </div>
                         </Link>
                         <p className="text-gray-400 text-sm leading-relaxed">
@@ -57,15 +57,32 @@ export const Footer = ({ settings }: { settings: any }) => {
                     {/* Contact Info */}
                     <div>
                         <h4 className="text-lg font-bold mb-6 text-white">Contact Us</h4>
-                        <ul className="space-y-4">
-                            <li className="flex items-start space-x-3 text-sm text-gray-400">
-                                <MapPin className="w-5 h-5 text-secondary shrink-0" />
-                                <span>{settings?.address || siteConfig.contact.address}</span>
-                            </li>
-                            <li className="flex items-center space-x-3 text-sm text-gray-400">
-                                <Phone className="w-5 h-5 text-secondary shrink-0" />
-                                <span>{settings?.phone || siteConfig.contact.phone}</span>
-                            </li>
+                        <ul className="space-y-6">
+                            {/* Main Office */}
+                            <div className="space-y-3">
+                                <li className="flex items-start space-x-3 text-sm text-gray-400">
+                                    <MapPin className="w-5 h-5 text-secondary shrink-0" />
+                                    <span>{settings?.address || siteConfig.contact.address}</span>
+                                </li>
+                                <li className="flex items-center space-x-3 text-sm text-gray-400">
+                                    <Phone className="w-5 h-5 text-secondary shrink-0" />
+                                    <span>{settings?.phone || siteConfig.contact.phone}</span>
+                                </li>
+                            </div>
+
+                            {/* Delhi Office */}
+                            <div className="space-y-3 pt-2 border-t border-white/5">
+                                <li className="text-[10px] uppercase tracking-[0.2em] font-black text-secondary">Regional Center Office</li>
+                                <li className="flex items-start space-x-3 text-sm text-gray-400">
+                                    <MapPin className="w-5 h-5 text-secondary shrink-0" />
+                                    <span>{siteConfig.contact.delhiAddress}</span>
+                                </li>
+                                <li className="flex items-center space-x-3 text-sm text-gray-400">
+                                    <Phone className="w-5 h-5 text-secondary shrink-0" />
+                                    <span>{siteConfig.contact.delhiPhone}</span>
+                                </li>
+                            </div>
+
                             {settings?.whatsapp && (
                                 <li className="flex items-center space-x-3 text-sm text-gray-400 font-bold">
                                     <span className="w-5 h-5 text-green-500 shrink-0 flex items-center justify-center font-bold">W</span>
