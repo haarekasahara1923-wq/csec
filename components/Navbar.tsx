@@ -40,9 +40,9 @@ export const Navbar = ({ settings }: { settings: any }) => {
             <div className={cn("container mx-auto px-6 md:px-12 transition-all duration-500", scrolled ? "py-3 md:py-4" : "py-4 md:py-6")}>
                 <div className="flex items-center justify-between w-full">
                     {/* Logo & Branding */}
-                    <div className="flex items-center shrink-0">
+                    <div className="flex items-center shrink-0 md:ml-4 lg:ml-8">
                         <Link href="/" className="flex items-center group gap-2 xl:gap-3">
-                            <div className="relative h-12 md:h-16 lg:h-20 w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-2 py-1 md:px-3 md:py-1.5 rounded-[12px] md:rounded-[16px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden shrink-0">
+                            <div className="relative h-14 md:h-20 lg:h-28 w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-2 py-1 md:px-3 md:py-2 rounded-[14px] md:rounded-[24px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden shrink-0">
                                 <img 
                                     src="/logo_new.png" 
                                     alt="CSEC Logo" 
@@ -52,12 +52,12 @@ export const Navbar = ({ settings }: { settings: any }) => {
                             </div>
                             <div className="flex flex-col justify-center text-left">
                                 <span className={cn(
-                                    "text-[14px] sm:text-[16px] lg:text-[18px] xl:text-[20px] font-black leading-tight tracking-tight text-primary transition-colors"
+                                    "text-[15px] sm:text-[18px] lg:text-[20px] xl:text-[24px] font-black leading-tight tracking-tight text-primary transition-colors"
                                 )}>
                                     Career Solution
                                 </span>
                                 <span className={cn(
-                                    "text-[10px] sm:text-[11px] lg:text-[12px] xl:text-[13px] font-bold leading-tight tracking-wide text-secondary transition-colors"
+                                    "text-[11px] sm:text-[12px] lg:text-[13px] xl:text-[14px] font-bold leading-tight tracking-wide text-secondary transition-colors"
                                 )}>
                                     Education Consultancy
                                 </span>
