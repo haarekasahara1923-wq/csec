@@ -25,11 +25,19 @@ export const Navbar = ({ settings }: { settings: any }) => {
     return (
         <nav
             className={cn(
-                "fixed top-0 w-full z-50 transition-all duration-500",
-                scrolled ? "royal-glass py-3 md:py-4 shadow-2xl" : "bg-transparent py-4 md:py-6"
+                "fixed top-0 w-full z-50 transition-all duration-500 flex flex-col",
+                scrolled ? "royal-glass shadow-2xl" : "bg-transparent"
             )}
         >
-            <div className="container mx-auto px-6 md:px-12">
+            {/* Helpline Top Bar */}
+            <div className="w-full bg-secondary text-primary py-1.5 md:py-2 px-4 flex justify-center items-center text-[10px] md:text-xs font-black tracking-widest uppercase shadow-sm">
+                <span className="flex items-center gap-2">
+                    <Phone className="w-3 h-3 md:w-3.5 md:h-3.5 animate-pulse" />
+                    Admission Helpline No. 9589305152
+                </span>
+            </div>
+
+            <div className={cn("container mx-auto px-6 md:px-12 transition-all duration-500", scrolled ? "py-3 md:py-4" : "py-4 md:py-6")}>
                 <div className="flex items-center justify-between w-full">
                     {/* Logo & Branding */}
                     <div className="flex items-center shrink-0">
@@ -92,6 +100,33 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                     )} />
                                 </Link>
                             ))}
+                            {/* Projects Dropdown */}
+                            <div className="relative group py-2">
+                                <button className={cn(
+                                    "text-[10px] xl:text-[11px] font-black uppercase tracking-wide transition-all group-hover:text-secondary whitespace-nowrap flex items-center gap-1",
+                                    "text-primary"
+                                )}>
+                                    Our Projects
+                                </button>
+                                <div className="absolute top-full right-0 mt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top w-64 bg-white rounded-2xl shadow-2xl shadow-primary/10 border border-slate-100 overflow-hidden flex flex-col z-50">
+                                    <div className="bg-primary px-4 py-3 border-b border-white/10">
+                                        <span className="text-[10px] uppercase tracking-widest text-secondary font-black block">Our Precious Projects</span>
+                                    </div>
+                                    <div className="max-h-[60vh] overflow-y-auto">
+                                        {siteConfig.projects.items.map(project => (
+                                            <a 
+                                                key={project.title}
+                                                href={project.href}
+                                                target="_blank"
+                                                className="px-4 py-3 text-[12px] font-bold text-slate-700 hover:text-secondary hover:bg-slate-50 transition-colors border-b border-slate-100 flex items-center group/item"
+                                            >
+                                                <span className="w-1.5 h-1.5 bg-secondary/30 rounded-full mr-3 group-hover/item:w-3 group-hover/item:bg-secondary transition-all" />
+                                                {project.title}
+                                            </a>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -177,6 +212,28 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                     </Link>
                                 </motion.div>
                             ))}
+
+                            {/* Mobile Projects Submenu */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: siteConfig.nav.length * 0.1 }}
+                                className="pt-4 border-t border-white/10"
+                            >
+                                <span className="text-secondary font-black uppercase tracking-widest text-[11px] mb-4 block">Our Precious Projects</span>
+                                <div className="flex flex-col space-y-3 pl-4 border-l-2 border-secondary/30">
+                                    {siteConfig.projects.items.map(project => (
+                                        <a 
+                                            key={project.title} 
+                                            href={project.href} 
+                                            target="_blank" 
+                                            className="text-white/70 hover:text-white font-bold text-xl py-1 flex items-center"
+                                        >
+                                            {project.title}
+                                        </a>
+                                    ))}
+                                </div>
+                            </motion.div>
                         </div>
 
                         <div className="mt-auto space-y-6">
