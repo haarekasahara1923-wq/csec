@@ -39,34 +39,8 @@ export const Navbar = ({ settings }: { settings: any }) => {
 
             <div className={cn("container mx-auto px-6 md:px-12 transition-all duration-500", scrolled ? "py-2 md:py-3" : "py-2 md:py-3")}>
                 <div className="flex items-center justify-between w-full">
-                    {/* Logo & Branding */}
-                    <div className="flex items-center shrink-0">
-                        <Link href="/" className="flex items-center group gap-2 xl:gap-3">
-                            <div className="relative h-14 md:h-20 lg:h-28 w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-2 py-1 md:px-3 md:py-2 rounded-[14px] md:rounded-[24px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden shrink-0">
-                                <img 
-                                    src="/logo_new.png" 
-                                    alt="CSEC Logo" 
-                                    className="h-full w-auto object-contain relative z-10 brightness-[1.05] contrast-[1.1]"
-                                    loading="eager"
-                                />
-                            </div>
-                            <div className="flex flex-col justify-center text-left -translate-y-1 lg:-translate-y-3">
-                                <span className={cn(
-                                    "text-[15px] sm:text-[18px] lg:text-[20px] xl:text-[24px] font-black leading-tight tracking-tight text-primary transition-colors"
-                                )}>
-                                    Career Solution
-                                </span>
-                                <span className={cn(
-                                    "text-[11px] sm:text-[12px] lg:text-[13px] xl:text-[14px] font-bold leading-tight tracking-wide text-secondary transition-colors"
-                                )}>
-                                    Education Consultancy
-                                </span>
-                            </div>
-                        </Link>
-                    </div>
-
-                    {/* Desktop Nav Links */}
-                    <div className="hidden lg:flex items-center justify-center mx-auto">
+                    {/* Desktop Nav Links & Action Buttons (Left side now) */}
+                    <div className="hidden lg:flex items-center space-x-6 xl:space-x-12">
                         <div className="flex items-center space-x-2 xl:space-x-4">
                             {siteConfig.nav.map((item) => (
                                 item.title === "Services" ? (
@@ -84,7 +58,7 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                                 pathname === item.href ? "w-full" : ""
                                             )} />
                                         </Link>
-                                        <div className="absolute top-full right-0 mt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top w-64 bg-white rounded-2xl shadow-2xl shadow-primary/10 border border-slate-100 overflow-hidden flex flex-col z-50">
+                                        <div className="absolute top-full left-0 mt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top w-64 bg-white rounded-2xl shadow-2xl shadow-primary/10 border border-slate-100 overflow-hidden flex flex-col z-50">
                                             <div className="bg-primary px-4 py-3 border-b border-white/10">
                                                 <span className="text-[10px] uppercase tracking-widest text-secondary font-black block">Our Precious Projects</span>
                                             </div>
@@ -121,30 +95,56 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                 )
                             ))}
                         </div>
+
+                        {/* Right Action Buttons grouped with Links */}
+                        <div className="flex items-center space-x-2 xl:space-x-3 shrink-0">
+                            <Link href="/partner/register" className="h-full">
+                                <Button variant="outline" className="border-primary/20 text-primary font-black uppercase tracking-widest text-[10px] pt-0.5 pb-0 h-9 xl:h-11 rounded-xl px-4 xl:px-6 hover:bg-primary hover:text-white transition-all">
+                                    Partner
+                                </Button>
+                            </Link>
+                            <Link href="/apply" className="h-full">
+                                <Button className="font-black uppercase tracking-widest text-[10px] pt-0.5 pb-0 h-9 xl:h-11 rounded-xl px-6 xl:px-8 shadow-xl shadow-primary/20 hover:shadow-secondary/40 transition-all bg-secondary text-primary">
+                                    Apply
+                                </Button>
+                            </Link>
+                        </div>
                     </div>
 
-                    {/* Right Action Buttons */}
-                    <div className="hidden lg:flex items-center space-x-2 xl:space-x-3 shrink-0">
-                        <Link href="/partner/register" className="h-full">
-                            <Button variant="outline" className="border-primary/20 text-primary font-black uppercase tracking-widest text-[10px] h-10 xl:h-12 rounded-2xl px-4 xl:px-6 hover:bg-primary hover:text-white transition-all">
-                                Partner
-                            </Button>
-                        </Link>
-                        <Link href="/apply" className="h-full">
-                            <Button className="font-black uppercase tracking-widest text-[10px] h-10 xl:h-12 rounded-2xl px-6 xl:px-8 shadow-xl shadow-primary/20 hover:shadow-secondary/40 transition-all bg-secondary text-primary">
-                                Apply
-                            </Button>
-                        </Link>
-                    </div>
-
-                    {/* Mobile Menu Button */}
-                    <div className="flex items-center lg:hidden ml-auto">
+                    {/* Mobile Menu Button - Left side on mobile */}
+                    <div className="flex items-center lg:hidden">
                         <button 
                             className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-white shadow-lg active:scale-95 transition-all" 
                             onClick={() => setIsOpen(!isOpen)}
                         >
                             {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
                         </button>
+                    </div>
+
+                    {/* Logo & Branding - Extreme Right Corner */}
+                    <div className="flex items-center justify-end shrink-0 ml-auto">
+                        <Link href="/" className="flex items-center flex-row-reverse group gap-2 xl:gap-4 text-right">
+                            <div className="relative h-20 sm:h-24 md:h-28 lg:h-32 xl:h-[9.5rem] w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-2 py-1 md:px-3 md:py-2 rounded-[14px] md:rounded-[24px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden shrink-0 translate-y-1 md:translate-y-2 lg:translate-y-4">
+                                <img 
+                                    src="/logo_new.png" 
+                                    alt="CSEC Logo" 
+                                    className="h-full w-auto object-contain relative z-10 brightness-[1.05] contrast-[1.1]"
+                                    loading="eager"
+                                />
+                            </div>
+                            <div className="flex flex-col justify-center -translate-y-1 lg:-translate-y-3">
+                                <span className={cn(
+                                    "text-[15px] sm:text-[18px] lg:text-[22px] xl:text-[26px] font-black leading-tight tracking-tight text-primary transition-colors"
+                                )}>
+                                    Career Solution
+                                </span>
+                                <span className={cn(
+                                    "text-[11px] sm:text-[13px] lg:text-[14px] xl:text-[16px] font-bold leading-tight tracking-wide text-secondary transition-colors"
+                                )}>
+                                    Education Consultancy
+                                </span>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -160,19 +160,19 @@ export const Navbar = ({ settings }: { settings: any }) => {
                         className="fixed inset-0 z-40 lg:hidden bg-primary/95 backdrop-blur-2xl flex flex-col p-8 md:p-12 overflow-y-auto overscroll-contain"
                     >
                         <div className="flex justify-between items-center mb-16">
-                              <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center gap-3">
-                                <div className="h-14 w-auto flex items-center justify-center overflow-hidden bg-white rounded-[16px] px-2 py-1 shadow-2xl border border-white/20 shrink-0">
+                              <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center flex-row-reverse text-right gap-4">
+                                <div className="h-20 sm:h-24 w-auto flex items-center justify-center overflow-hidden bg-white rounded-[16px] px-3 py-2 shadow-2xl border border-white/20 shrink-0">
                                      <img 
                                          src="/logo_new.png" 
                                          alt="CSEC Logo" 
                                          className="h-full w-auto object-contain brightness-[1.05] contrast-[1.1]"
                                      />
                                  </div>
-                                 <div className="flex flex-col justify-center text-left">
-                                     <span className="text-[15px] sm:text-[18px] font-black leading-tight tracking-tight text-white">
+                                 <div className="flex flex-col justify-center">
+                                     <span className="text-[20px] sm:text-[24px] font-black leading-tight tracking-tight text-white">
                                          Career Solution
                                      </span>
-                                     <span className="text-[11px] sm:text-[13px] font-bold leading-tight tracking-wide text-secondary/90">
+                                     <span className="text-[12px] sm:text-[14px] font-bold leading-tight tracking-wide text-secondary/90">
                                          Education Consultancy
                                      </span>
                                  </div>
