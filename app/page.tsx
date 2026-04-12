@@ -101,8 +101,8 @@ export default function Home() {
                                 <div className="absolute inset-0 bg-secondary/20 rounded-[80px] blur-3xl group-hover:bg-secondary/30 transition-all duration-700" />
                                 <div className="relative aspect-[4/5] rounded-[64px] overflow-hidden shadow-2xl border-8 border-white/5 royal-glass">
                                     <img 
-                                        src="/hero-offer.jpg" 
-                                        alt="CSEC Gwalior" 
+                                        src="/medical-hero.jpg" 
+                                        alt="Medical Dreams Come True - MBBS Abroad" 
                                         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent flex items-end p-12">
