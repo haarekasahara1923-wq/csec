@@ -45,7 +45,7 @@ export const Navbar = ({ settings }: { settings: any }) => {
                     {/* Logo & Branding - Extreme Left */}
                     <div className="flex items-start shrink-0">
                         <Link href="/" className="flex items-start group gap-2 xl:gap-4 text-left">
-                            <div className="relative h-16 sm:h-20 md:h-24 lg:h-28 xl:h-[7.5rem] mt-0 xl:-mt-2 w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-2 py-1 md:px-3 md:py-2 rounded-[14px] md:rounded-[24px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden shrink-0">
+                            <div className="relative h-16 sm:h-24 md:h-[7rem] lg:h-[8rem] xl:h-[8.5rem] mt-0 xl:-mt-2 w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-2 py-1 md:px-3 md:py-[10px] rounded-[14px] md:rounded-[24px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden shrink-0">
                                 <img 
                                     src="/logo_new.png" 
                                     alt="CSEC Logo" 
