@@ -69,7 +69,7 @@ export default function Home() {
                                 transition={{ delay: 0.2 }}
                                 className="text-xl md:text-3xl text-slate-400 max-w-2xl font-medium leading-relaxed"
                             >
-                                Premier education consultancy in Gwalior. Expert guidance for <span className="text-white font-bold">Management, Engineering, and Design.</span>
+                                Premium Education Consultancy in Gwalior. Expert Guidance for Top Institutes of <span className="text-white font-bold">Medical, Management, Engineering, Paramedical, Education, Law and Design.</span>
                             </motion.p>
                             
                             <motion.div 
