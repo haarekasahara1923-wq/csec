@@ -37,10 +37,10 @@ export const Navbar = ({ settings }: { settings: any }) => {
                 </span>
             </div>
 
-            <div className={cn("container mx-auto px-6 md:px-12 transition-all duration-500", scrolled ? "py-3 md:py-4" : "py-4 md:py-6")}>
+            <div className={cn("container mx-auto px-6 md:px-12 transition-all duration-500", scrolled ? "py-2 md:py-3" : "py-2 md:py-3")}>
                 <div className="flex items-center justify-between w-full">
                     {/* Logo & Branding */}
-                    <div className="flex items-center shrink-0 md:ml-4 lg:ml-8">
+                    <div className="flex items-center shrink-0">
                         <Link href="/" className="flex items-center group gap-2 xl:gap-3">
                             <div className="relative h-14 md:h-20 lg:h-28 w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-2 py-1 md:px-3 md:py-2 rounded-[14px] md:rounded-[24px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden shrink-0">
                                 <img 
@@ -50,7 +50,7 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                     loading="eager"
                                 />
                             </div>
-                            <div className="flex flex-col justify-center text-left">
+                            <div className="flex flex-col justify-center text-left -translate-y-1 lg:-translate-y-3">
                                 <span className={cn(
                                     "text-[15px] sm:text-[18px] lg:text-[20px] xl:text-[24px] font-black leading-tight tracking-tight text-primary transition-colors"
                                 )}>
