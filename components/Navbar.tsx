@@ -41,8 +41,8 @@ export const Navbar = ({ settings }: { settings: any }) => {
                 <div className="flex items-center justify-between w-full">
                     {/* Logo & Branding */}
                     <div className="flex items-center shrink-0">
-                        <Link href="/" className="flex items-center group gap-3">
-                            <div className="relative h-14 md:h-28 w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-2 py-1 md:px-3 md:py-1.5 rounded-[16px] md:rounded-[24px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden shrink-0">
+                        <Link href="/" className="flex items-center group gap-2 xl:gap-3">
+                            <div className="relative h-12 md:h-16 lg:h-20 w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-2 py-1 md:px-3 md:py-1.5 rounded-[12px] md:rounded-[16px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden shrink-0">
                                 <img 
                                     src="/logo_new.png" 
                                     alt="CSEC Logo" 
@@ -50,16 +50,14 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                     loading="eager"
                                 />
                             </div>
-                            <div className="flex flex-col lg:hidden justify-center text-left">
+                            <div className="flex flex-col justify-center text-left">
                                 <span className={cn(
-                                    "text-[15px] sm:text-[18px] font-black leading-tight tracking-tight",
-                                    scrolled ? "text-primary" : "text-primary md:text-white"
+                                    "text-[14px] sm:text-[16px] lg:text-[18px] xl:text-[20px] font-black leading-tight tracking-tight text-primary transition-colors"
                                 )}>
                                     Career Solution
                                 </span>
                                 <span className={cn(
-                                    "text-[11px] sm:text-[13px] font-bold leading-tight tracking-wide",
-                                    scrolled ? "text-secondary" : "text-secondary md:text-white/80"
+                                    "text-[10px] sm:text-[11px] lg:text-[12px] xl:text-[13px] font-bold leading-tight tracking-wide text-secondary transition-colors"
                                 )}>
                                     Education Consultancy
                                 </span>
@@ -67,23 +65,9 @@ export const Navbar = ({ settings }: { settings: any }) => {
                         </Link>
                     </div>
 
-                    {/* Desktop Nav Title & Menu */}
-                    <div className="hidden lg:flex flex-col items-center justify-center gap-2 mx-auto">
-                        <div className="flex flex-col items-center text-center">
-                            <span className={cn(
-                                "text-[18px] xl:text-[22px] font-black leading-tight tracking-tight",
-                                scrolled ? "text-primary" : "text-primary"
-                            )}>
-                                Career Solution
-                            </span>
-                            <span className={cn(
-                                "text-[12px] xl:text-[14px] font-bold leading-tight tracking-wide",
-                                scrolled ? "text-secondary" : "text-secondary"
-                            )}>
-                                Education Consultancy
-                            </span>
-                        </div>
-                        <div className="flex items-center space-x-3 xl:space-x-6">
+                    {/* Desktop Nav Links */}
+                    <div className="hidden lg:flex items-center justify-center mx-auto">
+                        <div className="flex items-center space-x-2 xl:space-x-4">
                             {siteConfig.nav.map((item) => (
                                 <Link
                                     key={item.href}
