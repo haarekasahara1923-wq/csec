@@ -29,20 +29,23 @@ export const Navbar = ({ settings }: { settings: any }) => {
                 scrolled ? "royal-glass shadow-2xl" : "bg-transparent"
             )}
         >
-            {/* Helpline Top Bar */}
-            <div className="w-full bg-secondary text-primary py-1.5 md:py-2 px-4 flex justify-center items-center text-[10px] md:text-xs font-black tracking-widest uppercase shadow-sm">
+            {/* Helpline Top Bar CTA */}
+            <a href="tel:+919589305152" className="w-full bg-secondary text-primary hover:bg-primary transition-colors hover:text-white group py-1.5 md:py-2 px-4 flex justify-center items-center text-[10px] md:text-xs font-black tracking-widest uppercase shadow-sm relative z-50 cursor-pointer">
                 <span className="flex items-center gap-2">
-                    <Phone className="w-3 h-3 md:w-3.5 md:h-3.5 animate-pulse" />
-                    Admission Helpline No. 9589305152
+                    <span className="relative flex h-3 w-3 md:h-4 md:w-4 items-center justify-center">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary/40 opacity-75"></span>
+                        <Phone className="relative inline-flex rounded-full w-3 h-3 md:w-3.5 md:h-3.5 animate-pulse group-hover:animate-bounce" />
+                    </span>
+                    <span className="animate-pulse">CALL ADMISSION HELPLINE NO. 9589305152</span>
                 </span>
-            </div>
+            </a>
 
-            <div className={cn("container mx-auto px-6 md:px-12 transition-all duration-500", scrolled ? "py-2 md:py-3" : "py-2 md:py-3")}>
+            <div className={cn("container mx-auto px-4 lg:px-6 xl:px-8 transition-all duration-500", scrolled ? "py-2 md:py-3" : "py-2 md:py-3")}>
                 <div className="flex items-start justify-between w-full relative">
                     {/* Logo & Branding - Extreme Left */}
                     <div className="flex items-start shrink-0">
                         <Link href="/" className="flex items-start group gap-2 xl:gap-4 text-left">
-                            <div className="relative h-20 sm:h-24 md:h-28 lg:h-32 xl:h-[9.5rem] w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-2 py-1 md:px-3 md:py-2 rounded-[14px] md:rounded-[24px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden shrink-0">
+                            <div className="relative h-16 sm:h-20 md:h-24 lg:h-28 xl:h-[7.5rem] mt-0 xl:-mt-2 w-auto flex items-center justify-center transition-all duration-700 hover:scale-105 bg-white px-2 py-1 md:px-3 md:py-2 rounded-[14px] md:rounded-[24px] shadow-2xl shadow-primary/20 border border-white/40 backdrop-blur-3xl overflow-hidden shrink-0">
                                 <img 
                                     src="/logo_new.png" 
                                     alt="CSEC Logo" 
@@ -131,7 +134,7 @@ export const Navbar = ({ settings }: { settings: any }) => {
                             </Button>
                         </Link>
                         <Link href="/apply" className="h-full">
-                            <Button className="font-black uppercase tracking-widest text-[10px] pt-0.5 pb-0 h-9 xl:h-11 rounded-xl px-6 xl:px-8 shadow-xl shadow-primary/20 hover:shadow-secondary/40 transition-all bg-secondary text-primary">
+                            <Button className="font-black uppercase tracking-widest text-[10px] pt-0.5 pb-0 h-9 xl:h-11 rounded-xl px-4 xl:px-6 shadow-xl shadow-primary/20 hover:shadow-secondary/40 transition-all bg-secondary text-primary">
                                 Apply
                             </Button>
                         </Link>
