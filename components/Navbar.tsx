@@ -69,48 +69,57 @@ export const Navbar = ({ settings }: { settings: any }) => {
                     <div className="hidden lg:flex items-center justify-center mx-auto">
                         <div className="flex items-center space-x-2 xl:space-x-4">
                             {siteConfig.nav.map((item) => (
-                                <Link
-                                    key={item.href}
-                                    href={item.href}
-                                    className={cn(
-                                        "text-[10px] xl:text-[11px] font-black uppercase tracking-wide transition-all hover:text-secondary group relative whitespace-nowrap",
-                                        pathname === item.href ? "text-secondary" : "text-primary"
-                                    )}
-                                >
-                                    {item.title}
-                                    <span className={cn(
-                                        "absolute -bottom-2 left-0 w-0 h-1 bg-secondary transition-all duration-300 group-hover:w-full",
-                                        pathname === item.href ? "w-full" : ""
-                                    )} />
-                                </Link>
+                                item.title === "Services" ? (
+                                    <div key={item.href} className="relative group py-2">
+                                        <Link
+                                            href={item.href}
+                                            className={cn(
+                                                "text-[10px] xl:text-[11px] font-black uppercase tracking-wide transition-all hover:text-secondary relative whitespace-nowrap flex items-center gap-1",
+                                                pathname === item.href ? "text-secondary" : "text-primary"
+                                            )}
+                                        >
+                                            {item.title}
+                                            <span className={cn(
+                                                "absolute -bottom-2 left-0 w-0 h-1 bg-secondary transition-all duration-300 group-hover:w-full",
+                                                pathname === item.href ? "w-full" : ""
+                                            )} />
+                                        </Link>
+                                        <div className="absolute top-full right-0 mt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top w-64 bg-white rounded-2xl shadow-2xl shadow-primary/10 border border-slate-100 overflow-hidden flex flex-col z-50">
+                                            <div className="bg-primary px-4 py-3 border-b border-white/10">
+                                                <span className="text-[10px] uppercase tracking-widest text-secondary font-black block">Our Precious Projects</span>
+                                            </div>
+                                            <div className="max-h-[60vh] overflow-y-auto">
+                                                {siteConfig.projects.items.map(project => (
+                                                    <a 
+                                                        key={project.title}
+                                                        href={project.href}
+                                                        target="_blank"
+                                                        className="px-4 py-3 text-[12px] font-bold text-slate-700 hover:text-secondary hover:bg-slate-50 transition-colors border-b border-slate-100 flex items-center group/item"
+                                                    >
+                                                        <span className="w-1.5 h-1.5 bg-secondary/30 rounded-full mr-3 group-hover/item:w-3 group-hover/item:bg-secondary transition-all" />
+                                                        {project.title}
+                                                    </a>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <Link
+                                        key={item.href}
+                                        href={item.href}
+                                        className={cn(
+                                            "text-[10px] xl:text-[11px] font-black uppercase tracking-wide transition-all hover:text-secondary group relative whitespace-nowrap",
+                                            pathname === item.href ? "text-secondary" : "text-primary"
+                                        )}
+                                    >
+                                        {item.title}
+                                        <span className={cn(
+                                            "absolute -bottom-2 left-0 w-0 h-1 bg-secondary transition-all duration-300 group-hover:w-full",
+                                            pathname === item.href ? "w-full" : ""
+                                        )} />
+                                    </Link>
+                                )
                             ))}
-                            {/* Projects Dropdown */}
-                            <div className="relative group py-2">
-                                <button className={cn(
-                                    "text-[10px] xl:text-[11px] font-black uppercase tracking-wide transition-all group-hover:text-secondary whitespace-nowrap flex items-center gap-1",
-                                    "text-primary"
-                                )}>
-                                    Our Projects
-                                </button>
-                                <div className="absolute top-full right-0 mt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top w-64 bg-white rounded-2xl shadow-2xl shadow-primary/10 border border-slate-100 overflow-hidden flex flex-col z-50">
-                                    <div className="bg-primary px-4 py-3 border-b border-white/10">
-                                        <span className="text-[10px] uppercase tracking-widest text-secondary font-black block">Our Precious Projects</span>
-                                    </div>
-                                    <div className="max-h-[60vh] overflow-y-auto">
-                                        {siteConfig.projects.items.map(project => (
-                                            <a 
-                                                key={project.title}
-                                                href={project.href}
-                                                target="_blank"
-                                                className="px-4 py-3 text-[12px] font-bold text-slate-700 hover:text-secondary hover:bg-slate-50 transition-colors border-b border-slate-100 flex items-center group/item"
-                                            >
-                                                <span className="w-1.5 h-1.5 bg-secondary/30 rounded-full mr-3 group-hover/item:w-3 group-hover/item:bg-secondary transition-all" />
-                                                {project.title}
-                                            </a>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -194,30 +203,24 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                     >
                                         {item.title}
                                     </Link>
+
+                                    {item.title === "Services" && (
+                                        <div className="flex flex-col space-y-3 pl-4 border-l-2 border-secondary/30 mt-2 mb-4">
+                                            <span className="text-secondary font-black uppercase tracking-widest text-[11px] mb-2 block">Our Precious Projects</span>
+                                            {siteConfig.projects.items.map(project => (
+                                                <a 
+                                                    key={project.title} 
+                                                    href={project.href} 
+                                                    target="_blank" 
+                                                    className="text-white/70 hover:text-white font-bold text-xl py-1 flex items-center"
+                                                >
+                                                    {project.title}
+                                                </a>
+                                            ))}
+                                        </div>
+                                    )}
                                 </motion.div>
                             ))}
-
-                            {/* Mobile Projects Submenu */}
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: siteConfig.nav.length * 0.1 }}
-                                className="pt-4 border-t border-white/10"
-                            >
-                                <span className="text-secondary font-black uppercase tracking-widest text-[11px] mb-4 block">Our Precious Projects</span>
-                                <div className="flex flex-col space-y-3 pl-4 border-l-2 border-secondary/30">
-                                    {siteConfig.projects.items.map(project => (
-                                        <a 
-                                            key={project.title} 
-                                            href={project.href} 
-                                            target="_blank" 
-                                            className="text-white/70 hover:text-white font-bold text-xl py-1 flex items-center"
-                                        >
-                                            {project.title}
-                                        </a>
-                                    ))}
-                                </div>
-                            </motion.div>
                         </div>
 
                         <div className="mt-auto space-y-6">
