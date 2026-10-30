@@ -6,9 +6,9 @@ import fs from "fs/promises";
 import { existsSync } from "fs";
 
 export const dynamic = "force-dynamic";
-export const maxDuration = 300; // 5 minutes duration for large 100MB files
+export const maxDuration = 300; // 5 minutes duration for 100MB files
 
-const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100 MB max file size limit
+const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100 MB limit
 
 export async function POST(req: Request) {
     try {
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
             const sizeInMB = (file.size / (1024 * 1024)).toFixed(1);
             return NextResponse.json(
                 {
-                    error: `File size (${sizeInMB} MB) exceeds the maximum allowed limit of 100 MB. Please upload a smaller file.`,
+                    error: `File size (${sizeInMB} MB) exceeds the maximum allowed limit of 100 MB. Please choose a file under 100 MB.`,
                 },
                 { status: 400 }
             );
@@ -47,9 +47,14 @@ export async function POST(req: Request) {
         const isVideo =
             mimeType.startsWith("video/") ||
             /\.(mp4|webm|mov|mkv|avi|m4v|3gp|flv|wmv)$/i.test(file.name);
-        const mediaType: "IMAGE" | "VIDEO" = isVideo ? "VIDEO" : "IMAGE";
 
-        // Try Cloudinary upload first if configured
+        const isServerless = Boolean(
+            process.env.VERCEL ||
+            process.env.AWS_LAMBDA_FUNCTION_NAME ||
+            process.cwd().startsWith("/var/task")
+        );
+
+        // Upload to Cloudinary
         if (isCloudinaryConfigured()) {
             try {
                 const cloudResult = await uploadMediaToCloudinary(buffer, {
@@ -67,11 +72,28 @@ export async function POST(req: Request) {
                     provider: "cloudinary",
                 });
             } catch (cloudErr: any) {
-                console.error("Cloudinary upload failed, falling back to local storage:", cloudErr);
+                console.error("Cloudinary upload failed:", cloudErr);
+                return NextResponse.json(
+                    {
+                        error: `Cloudinary upload failed: ${cloudErr?.message || cloudErr}`,
+                    },
+                    { status: 500 }
+                );
             }
         }
 
-        // Fallback: Local Storage in /public/uploads/gallery
+        // If Cloudinary is not configured and running in serverless environment (e.g. Vercel)
+        if (isServerless) {
+            return NextResponse.json(
+                {
+                    error:
+                        "Cloudinary is not configured in your Vercel deployment. Please set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET (or CLOUDINARY_URL) in your Vercel Project Settings > Environment Variables.",
+                },
+                { status: 400 }
+            );
+        }
+
+        // Local Storage fallback for local development only (outside serverless)
         const uploadDir = path.join(process.cwd(), "public", "uploads", "gallery");
         if (!existsSync(uploadDir)) {
             await fs.mkdir(uploadDir, { recursive: true });
@@ -93,7 +115,7 @@ export async function POST(req: Request) {
             url: publicUrl,
             thumbnailUrl: isVideo ? null : publicUrl,
             fileName: file.name,
-            mediaType,
+            mediaType: isVideo ? "VIDEO" : "IMAGE",
             provider: "local",
         });
     } catch (error: any) {

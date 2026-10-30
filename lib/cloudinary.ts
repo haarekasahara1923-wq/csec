@@ -1,12 +1,41 @@
 import { v2 as cloudinary } from "cloudinary";
+import os from "os";
+import path from "path";
+import fs from "fs/promises";
 
-// Initialize and configure Cloudinary
+// Setup and return configured Cloudinary instance
 export function getCloudinary() {
+    // 1. Try CLOUDINARY_URL format (e.g. cloudinary://api_key:api_secret@cloud_name)
+    if (process.env.CLOUDINARY_URL) {
+        try {
+            const urlStr = process.env.CLOUDINARY_URL.trim();
+            const parsed = new URL(urlStr);
+            cloudinary.config({
+                cloud_name: parsed.hostname,
+                api_key: parsed.username,
+                api_secret: parsed.password,
+                secure: true,
+            });
+        } catch (e) {
+            cloudinary.config({
+                cloudinary_url: process.env.CLOUDINARY_URL.trim(),
+                secure: true,
+            });
+        }
+    }
+
+    // 2. Check individual environment variables (overrides or sets if CLOUDINARY_URL not set)
     const cloudName =
         process.env.CLOUDINARY_CLOUD_NAME ||
-        process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-    const apiKey = process.env.CLOUDINARY_API_KEY;
-    const apiSecret = process.env.CLOUDINARY_API_SECRET;
+        process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ||
+        process.env.CLOUDINARY_NAME;
+    const apiKey =
+        process.env.CLOUDINARY_API_KEY ||
+        process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY ||
+        process.env.CLOUDINARY_KEY;
+    const apiSecret =
+        process.env.CLOUDINARY_API_SECRET ||
+        process.env.CLOUDINARY_SECRET;
 
     if (cloudName && apiKey && apiSecret) {
         cloudinary.config({
@@ -15,19 +44,15 @@ export function getCloudinary() {
             api_secret: apiSecret.trim(),
             secure: true,
         });
-    } else if (process.env.CLOUDINARY_URL) {
-        cloudinary.config({
-            cloudinary_url: process.env.CLOUDINARY_URL.trim(),
-            secure: true,
-        });
     }
 
     return cloudinary;
 }
 
 export function isCloudinaryConfigured(): boolean {
-    const config = getCloudinary().config();
-    return Boolean(config.cloud_name && (config.api_key || process.env.CLOUDINARY_URL));
+    const c = getCloudinary();
+    const config = c.config();
+    return Boolean(config.cloud_name && config.api_key && config.api_secret);
 }
 
 export async function uploadMediaToCloudinary(
@@ -45,51 +70,57 @@ export async function uploadMediaToCloudinary(
 }> {
     const cld = getCloudinary();
 
+    if (!isCloudinaryConfigured()) {
+        throw new Error(
+            "Cloudinary credentials are missing. Please set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET (or CLOUDINARY_URL) in environment variables."
+        );
+    }
+
     const isVideo =
         (options.mimeType && options.mimeType.startsWith("video/")) ||
         /\.(mp4|webm|mov|mkv|avi|m4v|3gp|flv|wmv)$/i.test(options.filename);
 
-    const resourceType = isVideo ? "video" : "image";
+    const resourceType: "video" | "image" | "auto" = isVideo ? "video" : "auto";
     const folder = options.folder || "csec_gallery";
 
-    return new Promise((resolve, reject) => {
-        const uploadStream = cld.uploader.upload_stream(
-            {
-                folder,
-                resource_type: resourceType,
-                chunk_size: 6000000, // 6 MB chunks for large files / videos up to 100MB
-                timeout: 300000, // 5 min timeout for 100MB videos
-            },
-            (error, result) => {
-                if (error) {
-                    console.error("Cloudinary upload_stream error:", error);
-                    return reject(error);
-                }
-                if (!result) {
-                    return reject(new Error("Cloudinary upload returned an empty response."));
-                }
+    // Write buffer to temporary file in os.tmpdir() (supported in Vercel, AWS Lambda, Linux, Windows)
+    const safeExt = path.extname(options.filename) || (isVideo ? ".mp4" : ".jpg");
+    const safeBase = path
+        .basename(options.filename, safeExt)
+        .replace(/[^a-zA-Z0-9_-]/g, "_");
+    const tempFilePath = path.join(os.tmpdir(), `upload_${Date.now()}_${safeBase}${safeExt}`);
 
-                const url = result.secure_url || result.url;
-                const mediaType: "IMAGE" | "VIDEO" =
-                    result.resource_type === "video" || isVideo ? "VIDEO" : "IMAGE";
+    try {
+        await fs.writeFile(tempFilePath, buffer);
 
-                // Generate thumbnail for video (Cloudinary creates poster frame by replacing extension with .jpg)
-                let thumbnailUrl: string | null = null;
-                if (mediaType === "VIDEO") {
-                    thumbnailUrl = url.replace(/\.[^/.]+$/, ".jpg");
-                } else {
-                    thumbnailUrl = url;
-                }
+        // Upload using upload_large for chunked streaming (supports files up to 100MB+)
+        const uploadResult: any = await cld.uploader.upload_large(tempFilePath, {
+            folder,
+            resource_type: resourceType,
+            chunk_size: 6000000, // 6 MB chunks
+            timeout: 300000, // 5 min timeout
+        });
 
-                resolve({
-                    url,
-                    thumbnailUrl,
-                    mediaType,
-                    publicId: result.public_id,
-                });
-            }
-        );
+        const url = uploadResult.secure_url || uploadResult.url;
+        const determinedMediaType: "IMAGE" | "VIDEO" =
+            uploadResult.resource_type === "video" || isVideo ? "VIDEO" : "IMAGE";
 
-        uploadStream.end(buffer);
-    });
+        // Generate poster thumbnail for videos
+        let thumbnailUrl: string | null = null;
+        if (determinedMediaType === "VIDEO") {
+            thumbnailUrl = url.replace(/\.[^/.]+$/, ".jpg");
+        } else {
+            thumbnailUrl = url;
+        }
+
+        return {
+            url,
+            thumbnailUrl,
+            mediaType: determinedMediaType,
+            publicId: uploadResult.public_id,
+        };
+    } finally {
+        // Clean up temporary file
+        await fs.unlink(tempFilePath).catch(() => {});
+    }
 }
