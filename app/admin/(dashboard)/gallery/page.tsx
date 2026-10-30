@@ -13,6 +13,7 @@ import { Card, CardContent } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import CreateAlbumModal from "@/components/admin/CreateAlbumModal";
 import AlbumActions from "@/components/admin/AlbumActions";
+import ClearMockAlbumsButton from "@/components/admin/ClearMockAlbumsButton";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -51,6 +52,7 @@ export default async function AdminGalleryPage() {
                     </p>
                 </div>
                 <div className="flex items-center space-x-3">
+                    <ClearMockAlbumsButton albumCount={totalAlbums} />
                     <Link href="/gallery" target="_blank">
                         <Button variant="outline" className="text-xs font-bold border-slate-200">
                             <ExternalLink className="w-4 h-4 mr-1.5" /> View Public Gallery

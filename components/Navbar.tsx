@@ -62,12 +62,12 @@ export const Navbar = ({ settings }: { settings: any }) => {
                 </a>
 
                 {/* ── Main Header Content ── */}
-                <div className="container mx-auto px-4 lg:px-6 xl:px-8 py-2 md:py-2.5">
-                    <div className="flex items-center justify-between gap-4 w-full">
+                <div className="w-full max-w-[1550px] mx-auto px-3 sm:px-4 lg:px-5 xl:px-8 py-2 md:py-2.5">
+                    <div className="flex items-center justify-between gap-3 xl:gap-5 w-full">
 
                         {/* ── Left: Majestic Royal Crest Logo & Branding ── */}
-                        <Link href="/" className="flex items-center group gap-3 xl:gap-4 shrink-0 text-left mr-4 xl:mr-8">
-                            <div className="relative h-14 sm:h-18 md:h-20 lg:h-[5.5rem] xl:h-[6rem] w-auto flex items-center justify-center transition-all duration-500 group-hover:scale-105 bg-white px-2.5 py-1.5 md:px-3 md:py-2 rounded-2xl shadow-xl shadow-primary/15 border border-slate-100 overflow-hidden shrink-0">
+                        <Link href="/" className="flex items-center group gap-2.5 xl:gap-4 shrink-0 text-left mr-3 xl:mr-6">
+                            <div className="relative h-13 sm:h-16 md:h-18 lg:h-[4.75rem] xl:h-[5.5rem] w-auto flex items-center justify-center transition-all duration-500 group-hover:scale-105 bg-white px-2 py-1 md:px-2.5 md:py-1.5 rounded-2xl shadow-xl shadow-primary/15 border border-slate-100 overflow-hidden shrink-0">
                                 <img
                                     src="/logo_new.png"
                                     alt="CSEC Logo"
@@ -76,43 +76,43 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                 />
                             </div>
                             <div className="flex flex-col justify-center leading-tight">
-                                <span className="text-[17px] sm:text-[20px] lg:text-[23px] xl:text-[26px] font-black tracking-tight text-primary transition-colors">
+                                <span className="text-[15px] sm:text-[18px] lg:text-[19px] xl:text-[24px] font-black tracking-tight text-primary transition-colors whitespace-nowrap">
                                     Career Solution
                                 </span>
-                                <span className="text-[11px] sm:text-[13px] lg:text-[14px] xl:text-[15px] font-bold tracking-wide text-secondary transition-colors mt-0.5 whitespace-nowrap">
+                                <span className="text-[10px] sm:text-[11.5px] lg:text-[11.5px] xl:text-[13.5px] font-bold tracking-wide text-secondary transition-colors mt-0.5 whitespace-nowrap">
                                     Education Consultancy
                                 </span>
                             </div>
                         </Link>
 
-                        {/* ── Desktop: 2-Tier Stack on Right (Aligned & Well-Balanced) ── */}
-                        <div className="hidden lg:flex flex-col items-end justify-center flex-1 min-w-0 pl-2 xl:pl-4">
+                        {/* ── Desktop: 2-Tier Stack on Right (Well-Spaced, No Overlap!) ── */}
+                        <div className="hidden lg:flex flex-col items-end justify-center flex-1 min-w-0 pl-2">
 
                             {/* Tier 1: Inspirational Career Quote (Left) + Corner CTAs (Right) */}
-                            <div className="flex items-center justify-between w-full mb-1.5 gap-4">
+                            <div className="flex items-center justify-between w-full mb-1.5 gap-3 min-w-0">
                                 {/* Career Quote to replace blank space */}
-                                <div className="flex items-center gap-2 text-slate-600 truncate">
-                                    <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary/10 text-primary shrink-0">
-                                        <Sparkles className="w-3 h-3 text-secondary" />
+                                <div className="flex items-center gap-1.5 text-slate-600 truncate min-w-0">
+                                    <span className="flex items-center justify-center w-4 h-4 xl:w-5 xl:h-5 rounded-full bg-primary/10 text-primary shrink-0">
+                                        <Sparkles className="w-2.5 h-2.5 xl:w-3 xl:h-3 text-secondary" />
                                     </span>
-                                    <span className="text-[11px] xl:text-[12px] font-semibold tracking-tight text-slate-700 italic truncate">
+                                    <span className="text-[10px] xl:text-[11.5px] font-semibold tracking-tight text-slate-700 italic truncate">
                                         &ldquo;Your Trusted Gateway to Top Universities &amp; Global Careers&rdquo;
                                     </span>
                                 </div>
 
                                 {/* CTAs */}
-                                <div className="flex items-center gap-2.5 xl:gap-3 shrink-0">
+                                <div className="flex items-center gap-2 xl:gap-2.5 shrink-0">
                                     <Link href="/partner/register">
                                         <Button
                                             variant="outline"
-                                            className="border-primary/25 text-primary font-black uppercase tracking-widest text-[10px] xl:text-[11px] h-8 xl:h-8.5 rounded-xl px-4 xl:px-5 hover:bg-primary hover:text-white transition-all shadow-xs"
+                                            className="border-primary/25 text-primary font-black uppercase tracking-widest text-[9.5px] xl:text-[10.5px] h-7.5 xl:h-8 rounded-xl px-3.5 xl:px-4.5 hover:bg-primary hover:text-white transition-all shadow-xs"
                                         >
                                             Partner
                                         </Button>
                                     </Link>
                                     <Link href="/apply">
                                         <Button
-                                            className="bg-secondary text-primary font-black uppercase tracking-widest text-[10px] xl:text-[11px] h-8 xl:h-8.5 rounded-xl px-4 xl:px-6 shadow-md shadow-secondary/25 hover:brightness-105 transition-all"
+                                            className="bg-secondary text-primary font-black uppercase tracking-widest text-[9.5px] xl:text-[10.5px] h-7.5 xl:h-8 rounded-xl px-3.5 xl:px-4.5 shadow-md shadow-secondary/25 hover:brightness-105 transition-all"
                                         >
                                             Apply Now
                                         </Button>
@@ -120,26 +120,26 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                 </div>
                             </div>
 
-                            {/* Tier 2: All 9 Menu Items in ONE Sleek Row with Sharp Contrast */}
-                            <div className="flex items-center justify-end gap-1 xl:gap-2 flex-nowrap w-full">
+                            {/* Tier 2: All 9 Menu Items in ONE Row with Optimized Padding (No Overlap with Brand) */}
+                            <div className="flex items-center justify-end gap-0.5 xl:gap-1.5 flex-nowrap w-full">
                                 {siteConfig.nav.map((item) => {
                                     const active = pathname === item.href;
 
                                     if (item.title === "Services") {
                                         return (
-                                            <div key={item.href} className="relative group py-1">
+                                            <div key={item.href} className="relative group py-0.5">
                                                 <Link
                                                     href={item.href}
                                                     className={cn(
-                                                        "text-[10px] xl:text-[11px] font-black uppercase tracking-wide transition-all whitespace-nowrap flex items-center gap-1 px-2.5 xl:px-3 py-1.5 rounded-lg",
+                                                        "text-[9px] xl:text-[10.5px] font-black uppercase tracking-wider transition-all whitespace-nowrap flex items-center gap-0.5 px-1.5 xl:px-2.5 py-1 rounded-md",
                                                         active
-                                                            ? "bg-primary text-white shadow-sm shadow-primary/25"
+                                                            ? "bg-primary text-white shadow-xs"
                                                             : "text-slate-700 hover:text-primary hover:bg-primary/10"
                                                     )}
                                                 >
                                                     {item.title}
                                                     <ChevronDown className={cn(
-                                                        "w-3 h-3 transition-transform duration-200 group-hover:rotate-180",
+                                                        "w-2.5 h-2.5 xl:w-3 xl:h-3 transition-transform duration-200 group-hover:rotate-180",
                                                         active ? "text-white" : "text-slate-500 group-hover:text-primary"
                                                     )} />
                                                 </Link>
@@ -174,9 +174,9 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                             key={item.href}
                                             href={item.href}
                                             className={cn(
-                                                "text-[10px] xl:text-[11px] font-black uppercase tracking-wide transition-all whitespace-nowrap px-2.5 xl:px-3 py-1.5 rounded-lg relative",
+                                                "text-[9px] xl:text-[10.5px] font-black uppercase tracking-wider transition-all whitespace-nowrap px-1.5 xl:px-2.5 py-1 rounded-md relative",
                                                 active
-                                                    ? "bg-primary text-white shadow-sm shadow-primary/25"
+                                                    ? "bg-primary text-white shadow-xs"
                                                     : "text-slate-700 hover:text-primary hover:bg-primary/10"
                                             )}
                                         >
@@ -191,11 +191,11 @@ export const Navbar = ({ settings }: { settings: any }) => {
                         <div className="flex items-center lg:hidden ml-auto">
                             <button
                                 type="button"
-                                className="w-11 h-11 bg-primary rounded-xl flex items-center justify-center text-white shadow-lg active:scale-95 transition-all cursor-pointer"
+                                className="w-10 h-10 sm:w-11 sm:h-11 bg-primary rounded-xl flex items-center justify-center text-white shadow-lg active:scale-95 transition-all cursor-pointer"
                                 onClick={() => setIsOpen(!isOpen)}
                                 aria-label="Toggle menu"
                             >
-                                {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                                {isOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
                             </button>
                         </div>
                     </div>
@@ -218,14 +218,14 @@ export const Navbar = ({ settings }: { settings: any }) => {
                         {/* Drawer Header */}
                         <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 shrink-0 bg-black/15">
                             <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center gap-3">
-                                <div className="h-14 w-auto bg-white rounded-2xl px-3 py-2 flex items-center shrink-0 shadow-xl border border-white/30">
+                                <div className="h-13 w-auto bg-white rounded-2xl px-2.5 py-1.5 flex items-center shrink-0 shadow-xl border border-white/30">
                                     <img src="/logo_new.png" alt="CSEC Logo" className="h-full w-auto object-contain" />
                                 </div>
                                 <div>
-                                    <p className="text-[18px] sm:text-[20px] font-black text-white leading-tight">
+                                    <p className="text-[17px] sm:text-[19px] font-black text-white leading-tight">
                                         Career Solution
                                     </p>
-                                    <p className="text-[12px] font-bold text-secondary/90 mt-0.5">
+                                    <p className="text-[11.5px] font-bold text-secondary/90 mt-0.5">
                                         Education Consultancy
                                     </p>
                                 </div>

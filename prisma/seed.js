@@ -72,40 +72,30 @@ async function main() {
 
     console.log('Initial universities created');
 
-    // Create initial gallery album if none exists
-    const albumCount = await prisma.galleryAlbum.count();
-    if (albumCount === 0) {
-        await prisma.galleryAlbum.create({
-            data: {
-                title: 'Campus Life & Seminars',
-                slug: 'campus-life-seminars',
-                description: 'Moments from career seminars, student counseling sessions, and university visits.',
-                coverImage: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1200&auto=format&fit=crop',
-                items: {
-                    create: [
-                        {
-                            title: 'Annual Education Seminar',
-                            type: 'IMAGE',
-                            url: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1200&auto=format&fit=crop',
-                            caption: 'Students receiving counseling guidance from academic experts.'
-                        },
-                        {
-                            title: 'Student Success Celebration',
-                            type: 'IMAGE',
-                            url: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1200&auto=format&fit=crop',
-                            caption: 'Celebrating student admissions in top engineering & medical universities.'
-                        },
-                        {
-                            title: 'Global University Expo',
-                            type: 'IMAGE',
-                            url: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1200&auto=format&fit=crop',
-                            caption: 'Interactive workshop on study abroad pathways and scholarship opportunities.'
-                        }
-                    ]
-                }
-            }
+    // Clean up mock gallery data as requested by user
+    try {
+        const mockItems = await prisma.galleryItem.deleteMany({
+            where: {
+                OR: [
+                    { url: { contains: "unsplash.com" } },
+                    { album: { slug: { contains: "campus-life" } } },
+                ],
+            },
         });
-        console.log('Initial gallery album created');
+        const mockAlbums = await prisma.galleryAlbum.deleteMany({
+            where: {
+                OR: [
+                    { slug: { contains: "campus-life" } },
+                    { coverImage: { contains: "unsplash.com" } },
+                    { items: { none: {} } },
+                ],
+            },
+        });
+        if (mockAlbums.count > 0 || mockItems.count > 0) {
+            console.log(`Cleaned up ${mockAlbums.count} mock albums and ${mockItems.count} mock items`);
+        }
+    } catch (e) {
+        console.warn("Gallery cleanup note:", e.message);
     }
 }
 

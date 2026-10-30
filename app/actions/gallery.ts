@@ -229,3 +229,20 @@ export async function setAlbumCover(albumId: string, imageUrl: string) {
         return { error: error?.message || "Failed to set cover image" };
     }
 }
+
+export async function clearAllMockAlbums() {
+    try {
+        await requireAdmin();
+
+        await prisma.galleryItem.deleteMany({});
+        await prisma.galleryAlbum.deleteMany({});
+
+        revalidatePath("/admin/gallery");
+        revalidatePath("/gallery");
+
+        return { success: true };
+    } catch (error: any) {
+        console.error("Clear albums error:", error);
+        return { error: error?.message || "Failed to clear albums" };
+    }
+}
