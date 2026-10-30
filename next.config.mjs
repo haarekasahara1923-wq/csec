@@ -1,9 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    serverExternalPackages: ["@prisma/client", "ws"],
     experimental: {
-        serverExternalPackages: ["@prisma/client", "ws"],
+        serverActions: {
+            bodySizeLimit: "100mb",
+        },
     },
-
     webpack: (config, { isServer }) => {
         if (isServer) {
             config.externals.push("ws");

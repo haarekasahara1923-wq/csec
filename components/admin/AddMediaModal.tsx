@@ -12,7 +12,8 @@ import {
     Loader2,
     CheckCircle2,
     AlertCircle,
-    Youtube
+    Youtube,
+    FileCheck
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -23,6 +24,8 @@ interface AddMediaModalProps {
     albumId: string;
     albumTitle: string;
 }
+
+const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100 MB
 
 export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProps) {
     const [isOpen, setIsOpen] = useState(false);
@@ -37,18 +40,37 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [uploading, setUploading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState<string>("");
+    const [progressPercent, setProgressPercent] = useState<number>(0);
     const [error, setError] = useState("");
     const [successCount, setSuccessCount] = useState<number | null>(null);
     const router = useRouter();
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setError("");
         if (e.target.files && e.target.files.length > 0) {
             const filesArray = Array.from(e.target.files);
+
+            // Validate 100 MB limit on selected files
+            for (const file of filesArray) {
+                if (file.size > MAX_FILE_SIZE) {
+                    const mbSize = (file.size / (1024 * 1024)).toFixed(1);
+                    setError(
+                        `File "${file.name}" is ${mbSize} MB, which exceeds the 100 MB maximum limit. Please choose a file under 100 MB.`
+                    );
+                    e.target.value = "";
+                    setSelectedFiles([]);
+                    return;
+                }
+            }
+
             setSelectedFiles(filesArray);
 
             // Auto-detect type based on first file
             const first = filesArray[0];
-            if (first.type.startsWith("video/") || /\.(mp4|webm|mov|mkv|avi)$/i.test(first.name)) {
+            if (
+                first.type.startsWith("video/") ||
+                /\.(mp4|webm|mov|mkv|avi|m4v|3gp|flv|wmv)$/i.test(first.name)
+            ) {
                 setMediaType("VIDEO");
             } else {
                 setMediaType("IMAGE");
@@ -64,7 +86,7 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
             if (yt.thumbnailUrl) {
                 setThumbnailUrl(yt.thumbnailUrl);
             }
-        } else if (/\.(mp4|webm|mov|mkv|avi)$/i.test(val)) {
+        } else if (/\.(mp4|webm|mov|mkv|avi|m4v|3gp|flv|wmv)$/i.test(val)) {
             setMediaType("VIDEO");
         }
     };
@@ -78,21 +100,74 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
         setError("");
         setSuccessCount(null);
         setUploadProgress("");
+        setProgressPercent(0);
+    };
+
+    // Helper for uploading with XMLHttpRequest to track upload progress
+    const uploadSingleFile = (file: File): Promise<any> => {
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            const formData = new FormData();
+            formData.append("file", file);
+
+            xhr.open("POST", "/api/gallery/upload", true);
+
+            xhr.upload.onprogress = (event) => {
+                if (event.lengthComputable) {
+                    const percent = Math.round((event.loaded / event.total) * 90);
+                    setProgressPercent(percent);
+                    const loadedMB = (event.loaded / (1024 * 1024)).toFixed(1);
+                    const totalMB = (event.total / (1024 * 1024)).toFixed(1);
+                    setUploadProgress(
+                        `Uploading: ${loadedMB} MB / ${totalMB} MB (${percent}%)`
+                    );
+                }
+            };
+
+            xhr.onload = () => {
+                setProgressPercent(95);
+                setUploadProgress("Processing media & configuring...");
+                try {
+                    const data = JSON.parse(xhr.responseText);
+                    if (xhr.status >= 200 && xhr.status < 300 && data.success) {
+                        resolve(data);
+                    } else {
+                        reject(new Error(data.error || `Upload failed with status ${xhr.status}`));
+                    }
+                } catch (e) {
+                    reject(new Error(`Server error: ${xhr.statusText || "Invalid response"}`));
+                }
+            };
+
+            xhr.onerror = () => {
+                reject(new Error("Network error during file upload. Check your connection."));
+            };
+
+            xhr.ontimeout = () => {
+                reject(new Error("Upload timed out. If the video is large, please try again."));
+            };
+
+            // 5 minutes timeout for 100MB files
+            xhr.timeout = 300000;
+            xhr.send(formData);
+        });
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
         setUploading(true);
+        setProgressPercent(0);
 
         try {
             if (mode === "url") {
                 if (!url.trim()) {
-                    setError("Please enter a media URL or YouTube link");
+                    setError("Please enter an image URL, video URL, or YouTube link.");
                     setUploading(false);
                     return;
                 }
 
+                setUploadProgress("Saving link to album...");
                 const res = await addGalleryItem({
                     albumId,
                     title: title.trim() || undefined,
@@ -105,14 +180,17 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                 if (res.error) {
                     setError(res.error);
                 } else {
-                    resetForm();
-                    setIsOpen(false);
-                    router.refresh();
+                    setSuccessCount(1);
+                    setTimeout(() => {
+                        resetForm();
+                        setIsOpen(false);
+                        router.refresh();
+                    }, 800);
                 }
             } else {
                 // File upload mode
                 if (selectedFiles.length === 0) {
-                    setError("Please select at least one photo or video file");
+                    setError("Please select at least one photo or video file.");
                     setUploading(false);
                     return;
                 }
@@ -120,28 +198,24 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                 let completed = 0;
                 for (let i = 0; i < selectedFiles.length; i++) {
                     const file = selectedFiles[i];
-                    setUploadProgress(`Uploading ${i + 1} of ${selectedFiles.length}: ${file.name}...`);
+                    setUploadProgress(
+                        `Uploading file ${i + 1} of ${selectedFiles.length}: "${file.name}"...`
+                    );
 
-                    const formData = new FormData();
-                    formData.append("file", file);
-
-                    const uploadRes = await fetch("/api/gallery/upload", {
-                        method: "POST",
-                        body: formData,
-                    });
-
-                    if (!uploadRes.ok) {
-                        const errData = await uploadRes.json().catch(() => ({}));
-                        throw new Error(errData.error || `Upload failed for ${file.name}`);
-                    }
-
-                    const uploadData = await uploadRes.json();
+                    const uploadData = await uploadSingleFile(file);
 
                     // Create item in DB
-                    const itemTitle = selectedFiles.length === 1 && title.trim() ? title.trim() : file.name.replace(/\.[^/.]+$/, "");
-                    const itemCaption = selectedFiles.length === 1 && caption.trim() ? caption.trim() : undefined;
+                    setUploadProgress(`Adding to album...`);
+                    const itemTitle =
+                        selectedFiles.length === 1 && title.trim()
+                            ? title.trim()
+                            : file.name.replace(/\.[^/.]+$/, "");
+                    const itemCaption =
+                        selectedFiles.length === 1 && caption.trim()
+                            ? caption.trim()
+                            : undefined;
 
-                    await addGalleryItem({
+                    const itemRes = await addGalleryItem({
                         albumId,
                         title: itemTitle,
                         caption: itemCaption,
@@ -150,19 +224,26 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                         type: uploadData.mediaType || mediaType,
                     });
 
+                    if (itemRes && itemRes.error) {
+                        throw new Error(itemRes.error);
+                    }
+
                     completed++;
                 }
 
+                setProgressPercent(100);
                 setSuccessCount(completed);
-                resetForm();
+                setUploadProgress("Added successfully!");
+
                 setTimeout(() => {
+                    resetForm();
                     setIsOpen(false);
                     router.refresh();
                 }, 1000);
             }
         } catch (err: any) {
             console.error("Add media error:", err);
-            setError(err?.message || "Failed to add media item(s)");
+            setError(err?.message || "Failed to add media item(s). Please try again.");
         } finally {
             setUploading(false);
         }
@@ -188,11 +269,14 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                         <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 bg-slate-50/50">
                             <div>
                                 <h3 className="font-bold text-slate-800 text-lg">Add to "{albumTitle}"</h3>
-                                <p className="text-xs text-slate-400">Upload photos, videos, or paste YouTube/media links</p>
+                                <p className="text-xs text-slate-400">
+                                    Upload images/videos (Cloudinary configured, up to 100 MB per file) or paste links
+                                </p>
                             </div>
                             <button
-                                onClick={() => setIsOpen(false)}
-                                className="p-2 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100 transition-colors"
+                                onClick={() => !uploading && setIsOpen(false)}
+                                disabled={uploading}
+                                className="p-2 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100 transition-colors disabled:opacity-50"
                             >
                                 <X className="w-5 h-5" />
                             </button>
@@ -202,6 +286,7 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                         <div className="flex p-2 bg-slate-100/80 m-6 mb-2 rounded-2xl gap-2">
                             <button
                                 type="button"
+                                disabled={uploading}
                                 onClick={() => setMode("file")}
                                 className={`flex-1 py-2 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${
                                     mode === "file"
@@ -214,6 +299,7 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                             </button>
                             <button
                                 type="button"
+                                disabled={uploading}
                                 onClick={() => setMode("url")}
                                 className={`flex-1 py-2 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${
                                     mode === "url"
@@ -228,16 +314,16 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
 
                         <form onSubmit={handleSubmit} className="p-6 pt-3 space-y-4 max-h-[75vh] overflow-y-auto">
                             {error && (
-                                <div className="p-3 bg-red-50 text-red-600 text-xs rounded-xl font-medium border border-red-100 flex items-start gap-2">
+                                <div className="p-3.5 bg-red-50 text-red-600 text-xs rounded-xl font-medium border border-red-100 flex items-start gap-2.5">
                                     <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                                     <span>{error}</span>
                                 </div>
                             )}
 
                             {successCount !== null && (
-                                <div className="p-3 bg-green-50 text-green-700 text-xs rounded-xl font-bold border border-green-100 flex items-center gap-2">
+                                <div className="p-3.5 bg-green-50 text-green-700 text-xs rounded-xl font-bold border border-green-100 flex items-center gap-2">
                                     <CheckCircle2 className="w-4 h-4 text-green-600 shrink-0" />
-                                    <span>Successfully added {successCount} media item(s)! Updating...</span>
+                                    <span>Successfully added {successCount} item(s)! Updating gallery...</span>
                                 </div>
                             )}
 
@@ -249,6 +335,7 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                                 <div className="flex gap-3">
                                     <button
                                         type="button"
+                                        disabled={uploading}
                                         onClick={() => setMediaType("IMAGE")}
                                         className={`flex-1 py-2.5 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 transition-all ${
                                             mediaType === "IMAGE"
@@ -261,6 +348,7 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                                     </button>
                                     <button
                                         type="button"
+                                        disabled={uploading}
                                         onClick={() => setMediaType("VIDEO")}
                                         className={`flex-1 py-2.5 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 transition-all ${
                                             mediaType === "VIDEO"
@@ -269,7 +357,7 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                                         }`}
                                     >
                                         <VideoIcon className="w-4 h-4 text-secondary" />
-                                        Video
+                                        Video (Up to 100 MB)
                                     </button>
                                 </div>
                             </div>
@@ -277,9 +365,15 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                             {/* File Upload Box */}
                             {mode === "file" && (
                                 <div>
-                                    <label className="block text-xs font-black uppercase tracking-wider text-slate-600 mb-2">
-                                        Select Files (Images or Videos) *
-                                    </label>
+                                    <div className="flex items-center justify-between mb-2">
+                                        <label className="text-xs font-black uppercase tracking-wider text-slate-600">
+                                            Select Files (Photos or Videos) *
+                                        </label>
+                                        <span className="text-[11px] font-bold text-slate-400">
+                                            Max 100 MB per file
+                                        </span>
+                                    </div>
+
                                     <label className="border-2 border-dashed border-slate-200 hover:border-primary/50 hover:bg-slate-50/50 transition-all rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer text-center group">
                                         <div className="w-12 h-12 rounded-2xl bg-primary/5 group-hover:bg-primary/10 text-primary flex items-center justify-center mb-3 transition-colors">
                                             <UploadCloud className="w-6 h-6" />
@@ -288,7 +382,7 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                                             Click to browse or drag & drop files
                                         </span>
                                         <span className="text-xs text-slate-400 mt-1">
-                                            Supports JPG, PNG, WEBP, MP4, WEBM, MOV (multi-select allowed)
+                                            JPG, PNG, WEBP, MP4, WEBM, MOV (Max size: 100 MB)
                                         </span>
                                         <input
                                             type="file"
@@ -305,11 +399,16 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                                             <span className="text-xs font-bold text-slate-700 block mb-1">
                                                 Selected {selectedFiles.length} file(s):
                                             </span>
-                                            <div className="max-h-24 overflow-y-auto space-y-1 text-xs text-slate-500">
+                                            <div className="max-h-28 overflow-y-auto space-y-1 text-xs text-slate-500">
                                                 {selectedFiles.map((f, i) => (
-                                                    <div key={i} className="flex justify-between items-center text-[11px]">
-                                                        <span className="truncate max-w-[80%]">{f.name}</span>
-                                                        <span className="text-slate-400">{(f.size / (1024 * 1024)).toFixed(2)} MB</span>
+                                                    <div key={i} className="flex justify-between items-center text-[11px] py-0.5">
+                                                        <span className="truncate max-w-[75%] font-medium text-slate-700 flex items-center gap-1">
+                                                            <FileCheck className="w-3.5 h-3.5 text-green-600 shrink-0" />
+                                                            {f.name}
+                                                        </span>
+                                                        <span className="text-slate-500 font-bold">
+                                                            {(f.size / (1024 * 1024)).toFixed(2)} MB
+                                                        </span>
                                                     </div>
                                                 ))}
                                             </div>
@@ -330,10 +429,11 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                                             onChange={(e) => handleUrlChange(e.target.value)}
                                             placeholder="https://... or https://youtube.com/watch?v=..."
                                             required
+                                            disabled={uploading}
                                             className="text-xs font-medium"
                                         />
                                         <span className="text-[11px] text-slate-400 mt-1 block">
-                                            Paste any image link, MP4 link, or YouTube video/shorts URL.
+                                            Paste any image link, direct video link, or YouTube video/shorts URL.
                                         </span>
                                     </div>
 
@@ -353,6 +453,7 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                                                 value={thumbnailUrl}
                                                 onChange={(e) => setThumbnailUrl(e.target.value)}
                                                 placeholder="https://.../thumbnail.jpg"
+                                                disabled={uploading}
                                                 className="text-xs font-medium"
                                             />
                                         </div>
@@ -360,7 +461,7 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                                 </div>
                             )}
 
-                            {/* Title & Caption for single file or URL */}
+                            {/* Title & Caption */}
                             <div>
                                 <label className="block text-xs font-black uppercase tracking-wider text-slate-600 mb-2">
                                     Title (Optional)
@@ -369,6 +470,7 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                     placeholder="e.g. Award Distribution, Welcome Speech"
+                                    disabled={uploading}
                                     className="text-xs font-medium"
                                 />
                             </div>
@@ -382,14 +484,30 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                                     onChange={(e) => setCaption(e.target.value)}
                                     placeholder="Short caption or context for this photo/video..."
                                     rows={2}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary/20 text-xs font-medium resize-none"
+                                    disabled={uploading}
+                                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary/20 text-xs font-medium resize-none disabled:bg-slate-50"
                                 />
                             </div>
 
-                            {uploadProgress && (
-                                <div className="p-3 bg-blue-50 text-blue-700 rounded-xl border border-blue-100 text-xs font-medium flex items-center gap-2">
-                                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                                    <span>{uploadProgress}</span>
+                            {/* Progress bar when uploading */}
+                            {uploading && (
+                                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                                    <div className="flex justify-between items-center text-xs font-bold text-slate-700">
+                                        <span className="flex items-center gap-2">
+                                            <Loader2 className="w-3.5 h-3.5 animate-spin text-primary" />
+                                            {uploadProgress || "Uploading..."}
+                                        </span>
+                                        {progressPercent > 0 && <span>{progressPercent}%</span>}
+                                    </div>
+                                    <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                                        <div
+                                            className="bg-primary h-2 rounded-full transition-all duration-300"
+                                            style={{ width: `${progressPercent || 15}%` }}
+                                        />
+                                    </div>
+                                    <p className="text-[10px] text-slate-400">
+                                        Please keep this window open while the file uploads to Cloudinary.
+                                    </p>
                                 </div>
                             )}
 
@@ -411,7 +529,7 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                                     {uploading ? (
                                         <>
                                             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                            Adding Media...
+                                            Uploading & Adding...
                                         </>
                                     ) : (
                                         "Add to Gallery"

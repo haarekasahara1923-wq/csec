@@ -229,3 +229,4 @@ export default function AlbumDetailClient({ album }: AlbumDetailClientProps) {
         </div>
     );
 }
+

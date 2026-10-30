@@ -217,3 +217,4 @@ export default function MediaItemCard({ item, isCover, onPreview }: MediaItemCar
         </div>
     );
 }
+

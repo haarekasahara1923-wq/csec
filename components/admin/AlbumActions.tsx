@@ -102,3 +102,4 @@ export default function AlbumActions({ album }: AlbumActionsProps) {
         </div>
     );
 }
+

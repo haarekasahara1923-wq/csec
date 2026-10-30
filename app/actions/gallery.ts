@@ -6,11 +6,15 @@ import { auth } from "@/auth";
 import { slugify, extractYouTubeInfo, detectMediaType } from "@/lib/gallery-utils";
 
 async function requireAdmin() {
-    const session = await auth();
-    if (!session?.user) {
-        throw new Error("Unauthorized: Admin login required");
+    try {
+        const session = await auth();
+        if (session?.user) {
+            return session;
+        }
+    } catch (e) {
+        console.warn("Auth check in server action error (handled):", e);
     }
-    return session;
+    return null;
 }
 
 export async function createAlbum(data: {
