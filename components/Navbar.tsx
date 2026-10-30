@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/config";
 import { Button } from "./ui/Button";
-import { Menu, X, Phone, ChevronDown } from "lucide-react";
+import { Menu, X, Phone, ChevronDown, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -66,7 +66,7 @@ export const Navbar = ({ settings }: { settings: any }) => {
                     <div className="flex items-center justify-between gap-4 w-full">
 
                         {/* ── Left: Majestic Royal Crest Logo & Branding ── */}
-                        <Link href="/" className="flex items-center group gap-3 xl:gap-4 shrink-0 text-left">
+                        <Link href="/" className="flex items-center group gap-3 xl:gap-4 shrink-0 text-left mr-4 xl:mr-8">
                             <div className="relative h-14 sm:h-18 md:h-20 lg:h-[5.5rem] xl:h-[6rem] w-auto flex items-center justify-center transition-all duration-500 group-hover:scale-105 bg-white px-2.5 py-1.5 md:px-3 md:py-2 rounded-2xl shadow-xl shadow-primary/15 border border-slate-100 overflow-hidden shrink-0">
                                 <img
                                     src="/logo_new.png"
@@ -79,36 +79,49 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                 <span className="text-[17px] sm:text-[20px] lg:text-[23px] xl:text-[26px] font-black tracking-tight text-primary transition-colors">
                                     Career Solution
                                 </span>
-                                <span className="text-[11px] sm:text-[13px] lg:text-[14px] xl:text-[15px] font-bold tracking-wide text-secondary transition-colors mt-0.5">
+                                <span className="text-[11px] sm:text-[13px] lg:text-[14px] xl:text-[15px] font-bold tracking-wide text-secondary transition-colors mt-0.5 whitespace-nowrap">
                                     Education Consultancy
                                 </span>
                             </div>
                         </Link>
 
-                        {/* ── Desktop: 2-Tier Stack on Right (No extra white space!) ── */}
-                        <div className="hidden lg:flex flex-col items-end justify-center flex-1 min-w-0 pl-4">
+                        {/* ── Desktop: 2-Tier Stack on Right (Aligned & Well-Balanced) ── */}
+                        <div className="hidden lg:flex flex-col items-end justify-center flex-1 min-w-0 pl-2 xl:pl-4">
 
-                            {/* Tier 1: Corner CTA Buttons */}
-                            <div className="flex items-center gap-2.5 xl:gap-3 mb-1.5">
-                                <Link href="/partner/register">
-                                    <Button
-                                        variant="outline"
-                                        className="border-primary/25 text-primary font-black uppercase tracking-widest text-[10px] xl:text-[11px] h-8 xl:h-8.5 rounded-xl px-4 xl:px-5 hover:bg-primary hover:text-white transition-all shadow-xs"
-                                    >
-                                        Partner
-                                    </Button>
-                                </Link>
-                                <Link href="/apply">
-                                    <Button
-                                        className="bg-secondary text-primary font-black uppercase tracking-widest text-[10px] xl:text-[11px] h-8 xl:h-8.5 rounded-xl px-4 xl:px-6 shadow-md shadow-secondary/25 hover:brightness-105 transition-all"
-                                    >
-                                        Apply Now
-                                    </Button>
-                                </Link>
+                            {/* Tier 1: Inspirational Career Quote (Left) + Corner CTAs (Right) */}
+                            <div className="flex items-center justify-between w-full mb-1.5 gap-4">
+                                {/* Career Quote to replace blank space */}
+                                <div className="flex items-center gap-2 text-slate-600 truncate">
+                                    <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary/10 text-primary shrink-0">
+                                        <Sparkles className="w-3 h-3 text-secondary" />
+                                    </span>
+                                    <span className="text-[11px] xl:text-[12px] font-semibold tracking-tight text-slate-700 italic truncate">
+                                        &ldquo;Your Trusted Gateway to Top Universities &amp; Global Careers&rdquo;
+                                    </span>
+                                </div>
+
+                                {/* CTAs */}
+                                <div className="flex items-center gap-2.5 xl:gap-3 shrink-0">
+                                    <Link href="/partner/register">
+                                        <Button
+                                            variant="outline"
+                                            className="border-primary/25 text-primary font-black uppercase tracking-widest text-[10px] xl:text-[11px] h-8 xl:h-8.5 rounded-xl px-4 xl:px-5 hover:bg-primary hover:text-white transition-all shadow-xs"
+                                        >
+                                            Partner
+                                        </Button>
+                                    </Link>
+                                    <Link href="/apply">
+                                        <Button
+                                            className="bg-secondary text-primary font-black uppercase tracking-widest text-[10px] xl:text-[11px] h-8 xl:h-8.5 rounded-xl px-4 xl:px-6 shadow-md shadow-secondary/25 hover:brightness-105 transition-all"
+                                        >
+                                            Apply Now
+                                        </Button>
+                                    </Link>
+                                </div>
                             </div>
 
-                            {/* Tier 2: All 9 Menu Items in ONE Sleek Row */}
-                            <div className="flex items-center gap-0.5 xl:gap-2 flex-nowrap">
+                            {/* Tier 2: All 9 Menu Items in ONE Sleek Row with Sharp Contrast */}
+                            <div className="flex items-center justify-end gap-1 xl:gap-2 flex-nowrap w-full">
                                 {siteConfig.nav.map((item) => {
                                     const active = pathname === item.href;
 
@@ -120,12 +133,15 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                                     className={cn(
                                                         "text-[10px] xl:text-[11px] font-black uppercase tracking-wide transition-all whitespace-nowrap flex items-center gap-1 px-2.5 xl:px-3 py-1.5 rounded-lg",
                                                         active
-                                                            ? "text-secondary bg-secondary/10"
-                                                            : "text-slate-700 hover:text-secondary hover:bg-slate-100/70"
+                                                            ? "bg-primary text-white shadow-sm shadow-primary/25"
+                                                            : "text-slate-700 hover:text-primary hover:bg-primary/10"
                                                     )}
                                                 >
                                                     {item.title}
-                                                    <ChevronDown className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180" />
+                                                    <ChevronDown className={cn(
+                                                        "w-3 h-3 transition-transform duration-200 group-hover:rotate-180",
+                                                        active ? "text-white" : "text-slate-500 group-hover:text-primary"
+                                                    )} />
                                                 </Link>
                                                 {/* Dropdown panel */}
                                                 <div className="pointer-events-none group-hover:pointer-events-auto absolute top-full right-0 mt-1 w-64 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200 z-50 rounded-2xl shadow-2xl shadow-primary/10 border border-slate-100 overflow-hidden bg-white">
@@ -141,9 +157,9 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                                                 href={project.href}
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
-                                                                className="flex items-center gap-3 px-4 py-2.5 text-[11px] font-bold text-slate-700 hover:text-secondary hover:bg-slate-50 transition-colors"
+                                                                className="flex items-center gap-3 px-4 py-2.5 text-[11px] font-bold text-slate-700 hover:text-primary hover:bg-slate-50 transition-colors"
                                                             >
-                                                                <span className="w-1.5 h-1.5 rounded-full bg-secondary/40 shrink-0" />
+                                                                <span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />
                                                                 {project.title}
                                                             </a>
                                                         ))}
@@ -158,10 +174,10 @@ export const Navbar = ({ settings }: { settings: any }) => {
                                             key={item.href}
                                             href={item.href}
                                             className={cn(
-                                                "text-[10px] xl:text-[11px] font-black uppercase tracking-wide transition-all whitespace-nowrap px-2.5 xl:px-3 py-1.5 rounded-lg relative group",
+                                                "text-[10px] xl:text-[11px] font-black uppercase tracking-wide transition-all whitespace-nowrap px-2.5 xl:px-3 py-1.5 rounded-lg relative",
                                                 active
-                                                    ? "text-secondary bg-secondary/10"
-                                                    : "text-slate-700 hover:text-secondary hover:bg-slate-100/70"
+                                                    ? "bg-primary text-white shadow-sm shadow-primary/25"
+                                                    : "text-slate-700 hover:text-primary hover:bg-primary/10"
                                             )}
                                         >
                                             {item.title}
@@ -200,7 +216,7 @@ export const Navbar = ({ settings }: { settings: any }) => {
                         className="fixed inset-0 z-[9999] lg:hidden bg-primary flex flex-col overflow-y-auto overscroll-contain"
                     >
                         {/* Drawer Header */}
-                        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 shrink-0 bg-primary-dark/40">
+                        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 shrink-0 bg-black/15">
                             <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center gap-3">
                                 <div className="h-14 w-auto bg-white rounded-2xl px-3 py-2 flex items-center shrink-0 shadow-xl border border-white/30">
                                     <img src="/logo_new.png" alt="CSEC Logo" className="h-full w-auto object-contain" />
