@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { addGalleryItem } from "@/app/actions/gallery";
 import { extractYouTubeInfo } from "@/lib/gallery-utils";
+import { uploadMediaClient } from "@/lib/gallery-upload-client";
 
 interface AddMediaModalProps {
     albumId: string;
@@ -103,55 +104,7 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
         setProgressPercent(0);
     };
 
-    // Helper for uploading with XMLHttpRequest to track upload progress
-    const uploadSingleFile = (file: File): Promise<any> => {
-        return new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            const formData = new FormData();
-            formData.append("file", file);
-
-            xhr.open("POST", "/api/gallery/upload", true);
-
-            xhr.upload.onprogress = (event) => {
-                if (event.lengthComputable) {
-                    const percent = Math.round((event.loaded / event.total) * 90);
-                    setProgressPercent(percent);
-                    const loadedMB = (event.loaded / (1024 * 1024)).toFixed(1);
-                    const totalMB = (event.total / (1024 * 1024)).toFixed(1);
-                    setUploadProgress(
-                        `Uploading: ${loadedMB} MB / ${totalMB} MB (${percent}%)`
-                    );
-                }
-            };
-
-            xhr.onload = () => {
-                setProgressPercent(95);
-                setUploadProgress("Processing media & configuring...");
-                try {
-                    const data = JSON.parse(xhr.responseText);
-                    if (xhr.status >= 200 && xhr.status < 300 && data.success) {
-                        resolve(data);
-                    } else {
-                        reject(new Error(data.error || `Upload failed with status ${xhr.status}`));
-                    }
-                } catch (e) {
-                    reject(new Error(`Server error: ${xhr.statusText || "Invalid response"}`));
-                }
-            };
-
-            xhr.onerror = () => {
-                reject(new Error("Network error during file upload. Check your connection."));
-            };
-
-            xhr.ontimeout = () => {
-                reject(new Error("Upload timed out. If the video is large, please try again."));
-            };
-
-            // 5 minutes timeout for 100MB files
-            xhr.timeout = 300000;
-            xhr.send(formData);
-        });
-    };
+    // No local uploadSingleFile needed — direct Cloudinary upload is handled by uploadMediaClient
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -202,7 +155,12 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                         `Uploading file ${i + 1} of ${selectedFiles.length}: "${file.name}"...`
                     );
 
-                    const uploadData = await uploadSingleFile(file);
+                    const uploadData = await uploadMediaClient(file, (percent, loadedMB, totalMB) => {
+                        setProgressPercent(percent);
+                        setUploadProgress(
+                            `Uploading: ${loadedMB} MB / ${totalMB} MB (${percent}%)`
+                        );
+                    });
 
                     if (!uploadData || !uploadData.url) {
                         throw new Error(`Failed to upload ${file.name}: No valid URL was returned from Cloudinary.`);
@@ -224,7 +182,7 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
                         title: itemTitle,
                         caption: itemCaption,
                         url: uploadData.url,
-                        thumbnailUrl: uploadData.thumbnailUrl,
+                        thumbnailUrl: uploadData.thumbnailUrl ?? undefined,
                         type: uploadData.mediaType || mediaType,
                     });
 
