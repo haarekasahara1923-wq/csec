@@ -24,7 +24,7 @@ export function getCloudinary() {
         }
     }
 
-    // 2. Check individual environment variables (overrides or sets if CLOUDINARY_URL not set)
+    // 2. Check individual environment variables
     const cloudName =
         process.env.CLOUDINARY_CLOUD_NAME ||
         process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ||
@@ -72,7 +72,7 @@ export async function uploadMediaToCloudinary(
 
     if (!isCloudinaryConfigured()) {
         throw new Error(
-            "Cloudinary credentials are missing. Please set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET (or CLOUDINARY_URL) in environment variables."
+            "Cloudinary credentials are missing. Please set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in environment variables."
         );
     }
 
@@ -83,25 +83,52 @@ export async function uploadMediaToCloudinary(
     const resourceType: "video" | "image" | "auto" = isVideo ? "video" : "auto";
     const folder = options.folder || "csec_gallery";
 
-    // Write buffer to temporary file in os.tmpdir() (supported in Vercel, AWS Lambda, Linux, Windows)
+    // Write buffer to temporary file in os.tmpdir() (safe for Vercel, AWS Lambda, Linux, Windows)
     const safeExt = path.extname(options.filename) || (isVideo ? ".mp4" : ".jpg");
     const safeBase = path
         .basename(options.filename, safeExt)
         .replace(/[^a-zA-Z0-9_-]/g, "_");
-    const tempFilePath = path.join(os.tmpdir(), `upload_${Date.now()}_${safeBase}${safeExt}`);
+    const tempFilePath = path.join(
+        os.tmpdir(),
+        `upload_${Date.now()}_${safeBase}${safeExt}`
+    );
 
     try {
         await fs.writeFile(tempFilePath, buffer);
 
-        // Upload using upload_large for chunked streaming (supports files up to 100MB+)
-        const uploadResult: any = await cld.uploader.upload_large(tempFilePath, {
-            folder,
-            resource_type: resourceType,
-            chunk_size: 6000000, // 6 MB chunks
-            timeout: 300000, // 5 min timeout
+        // upload_large requires a callback wrapped in Promise to properly resolve
+        let uploadResult: any = await new Promise((resolve, reject) => {
+            cld.uploader.upload_large(
+                tempFilePath,
+                {
+                    folder,
+                    resource_type: resourceType,
+                    chunk_size: 6000000, // 6 MB chunks
+                    timeout: 300000, // 5 min timeout
+                },
+                (error: any, result: any) => {
+                    if (error) {
+                        return reject(error);
+                    }
+                    resolve(result);
+                }
+            );
         });
 
-        const url = uploadResult.secure_url || uploadResult.url;
+        // Fallback to standard upload if upload_large returned no secure_url
+        if (!uploadResult || (!uploadResult.secure_url && !uploadResult.url)) {
+            uploadResult = await cld.uploader.upload(tempFilePath, {
+                folder,
+                resource_type: resourceType,
+                timeout: 300000,
+            });
+        }
+
+        const url = uploadResult?.secure_url || uploadResult?.url;
+        if (!url) {
+            throw new Error("Cloudinary upload completed but returned no valid URL.");
+        }
+
         const determinedMediaType: "IMAGE" | "VIDEO" =
             uploadResult.resource_type === "video" || isVideo ? "VIDEO" : "IMAGE";
 
@@ -117,7 +144,7 @@ export async function uploadMediaToCloudinary(
             url,
             thumbnailUrl,
             mediaType: determinedMediaType,
-            publicId: uploadResult.public_id,
+            publicId: uploadResult.public_id || "",
         };
     } finally {
         // Clean up temporary file

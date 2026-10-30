@@ -204,6 +204,10 @@ export default function AddMediaModal({ albumId, albumTitle }: AddMediaModalProp
 
                     const uploadData = await uploadSingleFile(file);
 
+                    if (!uploadData || !uploadData.url) {
+                        throw new Error(`Failed to upload ${file.name}: No valid URL was returned from Cloudinary.`);
+                    }
+
                     // Create item in DB
                     setUploadProgress(`Adding to album...`);
                     const itemTitle =
