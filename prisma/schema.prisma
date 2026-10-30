@@ -130,3 +130,29 @@ model Earning {
   createdAt         DateTime @default(now())
 }
 
+model GalleryAlbum {
+  id          String        @id @default(uuid())
+  title       String
+  slug        String        @unique
+  description String?
+  coverImage  String?
+  active      Boolean       @default(true)
+  order       Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  items       GalleryItem[]
+}
+
+model GalleryItem {
+  id           String       @id @default(uuid())
+  albumId      String
+  album        GalleryAlbum @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  title        String?
+  type         String       @default("IMAGE") // IMAGE | VIDEO
+  url          String
+  thumbnailUrl String?
+  caption      String?
+  order        Int          @default(0)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}

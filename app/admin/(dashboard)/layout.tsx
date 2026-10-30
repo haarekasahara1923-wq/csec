@@ -12,7 +12,8 @@ import {
     ExternalLink,
     GraduationCap,
     Handshake,
-    Wallet
+    Wallet,
+    Images
 } from "lucide-react";
 
 export default async function AdminDashboardLayout({
@@ -34,6 +35,7 @@ export default async function AdminDashboardLayout({
         { title: "Partner Earnings", href: "/admin/earnings", icon: Wallet },
         { title: "Courses", href: "/admin/courses", icon: BookOpen },
         { title: "Universities", href: "/admin/universities", icon: School },
+        { title: "Gallery", href: "/admin/gallery", icon: Images },
         { title: "Settings", href: "/admin/settings", icon: Settings },
     ];
 

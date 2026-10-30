@@ -22,6 +22,7 @@ export const siteConfig = {
         { title: "Admission Process", href: "/admission-process" },
         { title: "Services", href: "/services" },
         { title: "Study Abroad", href: "/study-abroad" },
+        { title: "Gallery", href: "/gallery" },
         { title: "Contact Us", href: "/contact" },
     ],
     footerLinks: [
@@ -30,6 +31,7 @@ export const siteConfig = {
             items: [
                 { title: "Home", href: "/" },
                 { title: "About Us", href: "/about" },
+                { title: "Gallery", href: "/gallery" },
                 { title: "Apply Now", href: "/apply" },
                 { title: "Partner Program", href: "/partner/register" },
                 { title: "Contact Us", href: "/contact" },
